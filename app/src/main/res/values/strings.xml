@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="no_internet_connection">ریدی اینترنت نداری</string>
+    <string name="coud_not_load_map" />
+    <string name="title_activity_maps2">Map</string>
+    <string name="dest">مقصد</string>
+    <string name="src">مبدا</string>
+</resources>
