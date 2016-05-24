@@ -179,7 +179,20 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(1000); // Update location every second
 
-        //noinspection MissingPermission
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            String a[] = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                requestPermissions(a, LOCATION_REQ_CODE);
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 googleApiClient, mLocationRequest, this);
         setCurrentLocation();
@@ -217,13 +230,6 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 String a[] = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                     requestPermissions(a, LOCATION_REQ_CODE);
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
         } else
@@ -235,10 +241,12 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
             setDefaultLocation();
             return;
         }
+
         Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 googleApiClient);
 
         if (lastLocation == null) {
+//            lastLocation = locationManager.getLastKnownLocation("GPS");
             progressDialog = new ProgressDialog(this);
             progressDialog.setCancelable(false);
             progressDialog.setMessage("در حال اتصال به GPS");
@@ -258,6 +266,19 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         if (requestCode == LOCATION_REQ_CODE) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                LocationServices.FusedLocationApi.requestLocationUpdates(
+                        googleApiClient, mLocationRequest, this);
                 setCurrentLocation();
             } else {
                 setDefaultLocation();
