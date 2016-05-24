@@ -1,4 +1,4 @@
-package com.mamut.taxi.myapplication;
+package com.mammutgroup.taxi.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;

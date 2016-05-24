@@ -1,4 +1,4 @@
-package com.mamut.taxi.myapplication;
+package com.mammutgroup.taxi.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
