@@ -6,4 +6,8 @@
     <string name="title_activity_maps2">Map</string>
     <string name="dest">مقصد</string>
     <string name="src">مبدا</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
