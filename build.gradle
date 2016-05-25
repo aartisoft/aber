@@ -13,9 +13,19 @@ buildscript {
 }
 
 allprojects {
+
     repositories {
         jcenter()
     }
+
+//    apply plugin: 'idea'
+//
+//    idea {
+//        module {
+//            downloadJavadoc = true
+//        }
+//    }
+
 }
 
 task clean(type: Delete) {

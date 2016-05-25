@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">عابر</string>
+    <string name="title_activity_maps">نقشه</string>
+    <string name="no_internet_connection">ریدی اینترنت نداری</string>
+    <string name="coud_not_load_map" />
+    <string name="title_activity_maps2">نقشه</string>
+    <string name="dest">مقصد</string>
+    <string name="src">مبدا</string>
+    <string name="title_activity_login">ورود به سیستم</string>
+    <string name="action_settings">تنظیمات</string>
+    <string name="title_activity_signup">ثبت نام</string>
+    <string name="title_activity_complete_signup">ثبت نام</string>
+    <string name="hello_world">سلام جهان</string>
+
+    <string name="txt_btn_login">ورود</string>
+    <string name="txt_btn_signup">ثبت نام</string>
+
+    <string name="txt_label_username">نام کاربری</string>
+    <string name="txt_label_password">رمز عبور</string>
+    <string name="txt_label_email">آدرس ایمیل</string>
+    <string name="txt_label_user_name">نام شما</string>
+    <string name="txt_label_mobile_number">شماره همراه</string>
+    <string name="txt_btn_confirm_profile">تایید</string>
+
+</resources>

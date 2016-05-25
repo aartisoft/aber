@@ -1,44 +1,39 @@
 package com.mammutgroup.taxi.activity;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.mammutgroup.taxi.activity.R;
+import com.mammutgroup.taxi.exception.InvalidMobileNumberException;
+import com.mammutgroup.taxi.util.MobileNumberUtil;
 
-public class LoginActivity extends AppCompatActivity {
 
-    @Bind(R.id.input_username)
-    EditText inputUsername;
-    @Bind(R.id.input_password)
-    EditText inputPassword;
-    @Bind(R.id.btn_login)
-    Button btnLogin;
-    @Bind(R.id.link_signup)
-    TextView linkSignup;
+public class CompleteSignupActivity extends AppCompatActivity {
 
+    @Bind(R.id.btn_init_profile)
+    Button btnInitProfile;
+    @Bind(R.id.input_user_profile_name)
+    EditText inputUserProfileName;
+    @Bind(R.id.input_mobile_number)
+    EditText inputMobileNumber;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_complete_signup);
         ButterKnife.bind(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_complete_signup, menu);
         return true;
     }
 
@@ -57,21 +52,21 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.btn_login)
-     void login()
+    @OnClick(R.id.btn_init_profile)
+    void saveProfile()
     {
-        // todo call service
-        //todo check mobile verified
-        Intent intent = new Intent(this,MapsActivity2.class);
-        startActivity(intent);
-        finish();
+        String profileName = inputUserProfileName.getText().toString();
+        String mobile = inputMobileNumber.getText().toString();
+        try{
+            MobileNumberUtil.validate(mobile);
+            //todo validate profileName
+
+        }catch (InvalidMobileNumberException ex)
+        {
+            //todo
+        }
+
     }
 
-    @OnClick(R.id.link_signup)
-     void signup()
-    {
-        Intent intent = new Intent(this,SignupActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
 }

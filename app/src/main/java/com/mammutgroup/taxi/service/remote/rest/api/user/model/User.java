@@ -22,6 +22,7 @@ public class User extends BaseDto {
     private String type;
     private String email;
     private ProfilePicture profilePicture;
+    private boolean mobileVerified;
 
     public String getUsername() {
         return username;
@@ -109,5 +110,13 @@ public class User extends BaseDto {
 
     public void setProfilePicture(ProfilePicture profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public boolean isMobileVerified() {
+        return mobileVerified;
+    }
+
+    public void setMobileVerified(boolean mobileVerified) {
+        this.mobileVerified = mobileVerified;
     }
 }

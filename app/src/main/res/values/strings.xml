@@ -7,7 +7,20 @@
     <string name="dest">مقصد</string>
     <string name="src">مبدا</string>
     <string name="title_activity_login">LoginActivity</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_signup">Signing up</string>
+
+
+    <string name="txt_btn_login">Login</string>
+    <string name="txt_btn_signup">Sign Up</string>
+
+    <string name="txt_label_username">Username</string>
+    <string name="txt_label_password">Password</string>
+    <string name="txt_label_email">Email</string>
+    <string name="txt_label_user_name">Your Name</string>
+    <string name="txt_label_mobile_number">Mobile Number</string>
+    <string name="txt_btn_confirm_profile">Confirm</string>
+    <string name="title_activity_complete_signup">CompleteSignupActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
