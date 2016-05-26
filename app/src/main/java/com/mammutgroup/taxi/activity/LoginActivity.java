@@ -1,19 +1,23 @@
 package com.mammutgroup.taxi.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.mammutgroup.taxi.activity.R;
+import com.mammutgroup.taxi.TaxiApplication;
+import com.mammutgroup.taxi.service.remote.rest.api.auth.model.Token;
+import com.mammutgroup.taxi.widget.AppProgressDialog;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -26,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.link_signup)
     TextView linkSignup;
 
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -35,43 +40,72 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @OnClick(R.id.btn_login)
-     void login()
-    {
-        // todo call service
-        //todo check mobile verified
-        Intent intent = new Intent(this,MapsActivity2.class);
-        startActivity(intent);
-        finish();
+    void login() {
+
+        if(!basicValidate())
+            return;
+        String username = inputUsername.getText().toString();
+        String password = inputPassword.getText().toString();
+        showProgressDialog();
+
+        TaxiApplication.restClient().authService().getAccessToken(
+                username,
+                password,
+                "password",
+                "test",
+                "test",
+                new Callback<Token>() {
+                    @Override
+                    public void success(Token token, Response response) {
+                        //todo update user config
+                        //todo check mobile verification
+                        hideProgressDialog();
+                        transitToHome();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                }
+
+
+        );
     }
 
     @OnClick(R.id.link_signup)
-     void signup()
-    {
-        Intent intent = new Intent(this,SignupActivity.class);
+    void signup() {
+        Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
         finish();
     }
+
+    private boolean basicValidate()
+    {
+        return inputUsername.getText().length()> 0 && inputPassword.length() > 0 ;
+    }
+
+    private void transitToHome()
+    {
+        Intent intent = new Intent(this,MapsActivity2.class); // todo change to home
+        startActivity(intent);
+        finish();
+    }
+
+    private void showProgressDialog()
+    {
+        progressDialog = new AppProgressDialog(this);
+        progressDialog.setMessage(getResources().getString(R.string.message_progress_login));
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog()
+    {
+        progressDialog.dismiss();
+        progressDialog = null;
+    }
+
 }

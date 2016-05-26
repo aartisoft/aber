@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.mammutgroup.taxi.config.UserConfig;
 import com.mammutgroup.taxi.service.remote.rest.TaxiRestClient;
+import com.mammutgroup.taxi.service.remote.rest.mock.MockTaxiRestClient;
 
 /**
  * @author mushtu
@@ -20,7 +21,7 @@ public class TaxiApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        taxiRestClient = new TaxiRestClient();
+        taxiRestClient = new MockTaxiRestClient();
         context = getApplicationContext();
     }
 

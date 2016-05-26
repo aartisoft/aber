@@ -1,25 +1,22 @@
-package com.mammutgroup.taxi.service.remote.rest.api.user.model;
+package com.mammutgroup.taxi.service.remote.rest.api.auth.model;
 
 import com.google.gson.annotations.SerializedName;
 
 /**
  * @author mushtu
- * @since 5/24/16.
+ * @since 5/26/16.
  */
-public class RegisterResponse {
+public class Token {
 
     @SerializedName("access_token")
     private String accessToken;
     @SerializedName("expires_in")
-    private Long expires ;
+    private Long expires;
     @SerializedName("token_type")
     private String tokenType;
-    @SerializedName("scope")
-    private String scope;
     @SerializedName("refresh_token")
     private String refreshToken;
-    private String status;
-    private User user;
+    private String scope;
 
     public String getAccessToken() {
         return accessToken;
@@ -45,14 +42,6 @@ public class RegisterResponse {
         this.tokenType = tokenType;
     }
 
-    public String getScope() {
-        return scope;
-    }
-
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
-
     public String getRefreshToken() {
         return refreshToken;
     }
@@ -61,19 +50,11 @@ public class RegisterResponse {
         this.refreshToken = refreshToken;
     }
 
-    public String getStatus() {
-        return status;
+    public String getScope() {
+        return scope;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setScope(String scope) {
+        this.scope = scope;
     }
 }

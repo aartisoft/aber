@@ -21,5 +21,7 @@
     <string name="txt_label_user_name">نام شما</string>
     <string name="txt_label_mobile_number">شماره همراه</string>
     <string name="txt_btn_confirm_profile">تایید</string>
+    <string name="message_progress_signup">در حال ثبت نام...</string>
+    <string name="message_progress_login">در حال اجرا...</string>
 
 </resources>

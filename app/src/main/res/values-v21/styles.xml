@@ -30,11 +30,11 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-    <style name="MaterialAnimations.TextAppearance.Title" parent="TextAppearance.AppCompat.Title">
+    <style name="MaterialAnimations.TextAppearance.Title" parent="android:TextAppearance.Material.Title">
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
-    <style name="MaterialAnimations.TextAppearance.Title.Inverse" parent="TextAppearance.AppCompat.Title">
+    <style name="MaterialAnimations.TextAppearance.Title.Inverse" parent="android:TextAppearance.Material.Title">
         <item name="android:textColor">?android:textColorPrimaryInverse</item>
     </style>
 

@@ -9,6 +9,11 @@ import com.mammutgroup.taxi.service.remote.model.MobileNumber;
  */
 public class RegisterRequest {
 
+    public static final String TYPE_PASSENGER = "Passenger";
+    public static final String TYPE_DRIVER = "Driver";
+    public static final String TYPE_OPERATOR = "Operator";
+
+
     private String username;
     private String password;
     private String firstName;
@@ -23,6 +28,14 @@ public class RegisterRequest {
     private MobileNumber number;
     private String type;
     private String email;
+
+    public RegisterRequest()
+    {
+        this.type = TYPE_PASSENGER;
+        this.clientId = "test";
+        this.clientSecret = "test";
+        this.grantType = "password";
+    }
 
     public String getUsername() {
         return username;

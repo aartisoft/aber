@@ -17,11 +17,11 @@ import retrofit.converter.GsonConverter;
 public class TaxiRestClient {
     private static final String BASE_URL = "http://78.110.116.137:8080/api/v1/"; // todo get from shared preferences
 
-    private AuthService authService;
-    private LoginService loginService;
-    private OrderService orderService;
-    private ReportService reportService;
-    private UserService userService;
+    protected AuthService authService;
+    protected LoginService loginService;
+    protected OrderService orderService;
+    protected ReportService reportService;
+    protected UserService userService;
 
     public TaxiRestClient() {
         Gson gson = new GsonBuilder()
