@@ -10,13 +10,21 @@ import android.view.View;
 /**
  * Created by lgvalle on 12/09/15.
  */
-public class BaseDetailActivity extends AppCompatActivity {
-    static final String EXTRA_SAMPLE = "sample";
-    static final String EXTRA_TYPE = "type";
-    static final int TYPE_PROGRAMMATICALLY = 0;
-    static final int TYPE_XML = 1;
+public class TransitionActivity extends AppCompatActivity {
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
 
-//    void setupToolbar() {
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+    }
+
+    //    void setupToolbar() {
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);

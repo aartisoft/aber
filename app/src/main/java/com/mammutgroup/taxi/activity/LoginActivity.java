@@ -19,7 +19,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends TransitionActivity {
 
     @Bind(R.id.input_username)
     EditText inputUsername;
@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        System.out.println("VVVVVVV create....");
     }
 
 
