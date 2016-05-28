@@ -5,12 +5,16 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 
 /**
  * Created by lgvalle on 12/09/15.
  */
 public class TransitionActivity extends AppCompatActivity {
+
+    private Toolbar toolbar;
+
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);
@@ -24,12 +28,6 @@ public class TransitionActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 
-    //    void setupToolbar() {
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-//    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -37,9 +35,19 @@ public class TransitionActivity extends AppCompatActivity {
         return true;
     }
 
-    @SuppressWarnings("unchecked") void transitionTo(Intent i) {
-//        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, true);
-//        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
-//        startActivity(i, transitionActivityOptions.toBundle());
+
+
+    protected void setupToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_done_icon, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }

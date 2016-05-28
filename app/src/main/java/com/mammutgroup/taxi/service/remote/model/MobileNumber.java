@@ -9,10 +9,15 @@ import com.google.gson.annotations.SerializedName;
 public class MobileNumber {
 
     private String number;
-    @SerializedName(value = "code",alternate = {"countryCode"})
+    @SerializedName(value = "code",alternate = {"countryCode","numberCode"})
     private String code;
     @SerializedName("isVerifiedNumber")
     private Boolean isVerified;
+
+    public MobileNumber()
+    {
+        this.code = "IR";
+    }
 
     public String getNumber() {
         return number;

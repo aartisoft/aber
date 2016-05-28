@@ -3,8 +3,6 @@ package com.mammutgroup.taxi.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import com.mammutgroup.taxi.TaxiApplication;
 import com.mammutgroup.taxi.config.UserConfig;
 
@@ -28,7 +26,7 @@ public class LaunchActivity extends AppCompatActivity {
 
         }else
         {
-            Intent intent = new Intent(this,CompleteSignupActivity.class);
+            Intent intent = new Intent(this,MobileVerificationActivity.class);
             startActivity(intent);
             finish();
         }

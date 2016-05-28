@@ -1,10 +1,10 @@
 package com.mammutgroup.taxi.service.remote.rest.mock;
 
+import com.mammutgroup.taxi.service.remote.model.MobileNumber;
 import com.mammutgroup.taxi.service.remote.rest.api.user.UserService;
-import com.mammutgroup.taxi.service.remote.rest.api.user.model.RegisterRequest;
-import com.mammutgroup.taxi.service.remote.rest.api.user.model.RegisterResponse;
-import com.mammutgroup.taxi.service.remote.rest.api.user.model.User;
+import com.mammutgroup.taxi.service.remote.rest.api.user.model.*;
 import retrofit.Callback;
+import retrofit.http.Body;
 
 import java.util.UUID;
 
@@ -25,6 +25,18 @@ public class MockUserService implements UserService {
 
 
     }
+
+    @Override
+    public void changeMobileNumber(MobileNumber number, Callback<Object> callback) {
+        callback.success(new Object(),null);
+    }
+
+
+    @Override
+    public void verifyMobileNumber(VerificationCode code, Callback<VerificationCodeResponse> callback) {
+        callback.success(new VerificationCodeResponse(),null);
+    }
+
 
     private User user(String username,String password)
     {

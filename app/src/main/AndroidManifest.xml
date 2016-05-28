@@ -55,16 +55,27 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".CompleteSignupActivity"
-            android:label="@string/title_activity_complete_signup" >
-        </activity>
-        <activity android:name=".LoginActivity"
-                  android:label="@string/title_activity_login">
-        </activity>
-        <activity android:name=".SignupActivity" android:label="@string/title_activity_signup">
+            android:name=".MobileVerificationActivity"
+            android:label="@string/title_activity_mobile_verification"
+            >
 
         </activity>
-        <activity android:name=".MapsActivity2" android:label="@string/title_activity_maps2"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".SignupActivity"
+            android:label="@string/title_activity_signup" >
+        </activity>
+        <activity
+            android:name=".MapsActivity2"
+            android:label="@string/title_activity_maps2" />
+        <activity
+            android:name=".MobileVerificationCodeActivity"
+            android:label="@string/title_activity_mobile_verification_code">
+        </activity>
+
 
     </application>
 

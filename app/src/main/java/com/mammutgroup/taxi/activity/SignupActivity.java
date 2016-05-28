@@ -11,9 +11,7 @@ import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.google.gson.Gson;
 import com.mammutgroup.taxi.TaxiApplication;
-import com.mammutgroup.taxi.activity.R;
 import com.mammutgroup.taxi.service.remote.rest.api.user.model.RegisterRequest;
 import com.mammutgroup.taxi.service.remote.rest.api.user.model.RegisterResponse;
 import com.mammutgroup.taxi.widget.AppProgressDialog;
@@ -23,6 +21,8 @@ import retrofit.client.Response;
 
 public class SignupActivity extends AppCompatActivity {
 
+    @Bind(R.id.input_user_profile_name)
+    EditText inputProfileName;
     @Bind(R.id.input_username)
     EditText inputUsername;
     @Bind(R.id.input_password)
@@ -40,28 +40,6 @@ public class SignupActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_signup, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @OnClick(R.id.btn_signup)
     void signup()
     {
@@ -70,6 +48,7 @@ public class SignupActivity extends AppCompatActivity {
         RegisterRequest request = new RegisterRequest();
         request.setUsername(inputUsername.getText().toString());
         request.setPassword(inputPassword.getText().toString());
+        //todo set profile name
         showProgressDialog();
         TaxiApplication.restClient().userService().register(request, new Callback<RegisterResponse>() {
             @Override
@@ -107,7 +86,8 @@ public class SignupActivity extends AppCompatActivity {
     }
     private void transitToNextStep()
     {
-        Intent intent = new Intent(this,CompleteSignupActivity.class);
+        Intent intent = new Intent(this,MobileVerificationActivity.class);
         startActivity(intent);
+        finish();
     }
 }
