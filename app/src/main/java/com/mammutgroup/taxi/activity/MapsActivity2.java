@@ -37,8 +37,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.mammutgroup.taxi.util.CalculateDistance;
 import com.mammutgroup.taxi.util.DirectionsJSONParser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -132,6 +135,8 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         map.setOnMarkerDragListener(this);
     }
 
+    CalculateDistance calculateDistance = new CalculateDistance();
+
     @Override
     public void onMapClick(LatLng latLng) {
         if (sourceMarker == null) {
@@ -151,6 +156,18 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
             // Start downloading json data from Google Directions API
             downloadTask.execute(url);
+            float[] floats = new float[1];
+//            Location.distanceBetween(origin.latitude, origin.longitude,
+//                    dest.latitude, dest.longitude, floats);
+//            try {
+//                String distanceOnRoad = calculateDistance.getDistance(origin, dest);
+//                Toast.makeText(this, distanceOnRoad, Toast.LENGTH_LONG);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+
         }
     }
 
@@ -329,7 +346,8 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
 
         // Sensor enabled
-        String sensor = "sensor=false";
+        String sensor = "mode=driving&sensor=true";
+
 
         // Building the parameters to the web service
         String parameters = str_origin + "&" + str_dest + "&" + sensor;
@@ -415,7 +433,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     }
 
     /**
-     * A class to parse the Google Places in JSON format
+     * A class to parseRoute the Google Places in JSON format
      */
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
 
@@ -431,11 +449,28 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 DirectionsJSONParser parser = new DirectionsJSONParser();
 
                 // Starts parsing data
-                routes = parser.parse(jObject);
+                routes = parser.parseRoute(jObject);
+
+                String sDistance = parseDistance(jObject);
+
+                Log.d("XXYY" , sDistance);
+//                Toast.makeText(this,sDistance , Toast.LENGTH_LONG);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return routes;
+        }
+
+        private String parseDistance(JSONObject jObject) throws JSONException {
+            JSONArray routes = jObject.getJSONArray("routes");
+            JSONObject route = routes.getJSONObject(0);
+
+            JSONArray legs = route.getJSONArray("legs");
+
+            JSONObject steps = legs.getJSONObject(0);
+
+            JSONObject distance = steps.getJSONObject("distance");
+            return distance.getString("text");
         }
 
         // Executes in UI thread, after the parsing process

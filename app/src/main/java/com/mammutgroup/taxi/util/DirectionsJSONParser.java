@@ -18,7 +18,7 @@ import java.util.List;
 public class DirectionsJSONParser {
 
 
-    public List<List<HashMap<String, String>>> parse(JSONObject jObject) {
+    public List<List<HashMap<String, String>>> parseRoute(JSONObject jObject) {
         List<List<HashMap<String, String>>> routes = new ArrayList<List<HashMap<String, String>>>();
         JSONArray jRoutes = null;
         JSONArray jLegs = null;
@@ -54,6 +54,7 @@ public class DirectionsJSONParser {
                             hm.put("lng", Double.toString(((LatLng) list.get(l)).longitude));
                             path.add(hm);
                         }
+
                     }
                     routes.add(path);
                 }
