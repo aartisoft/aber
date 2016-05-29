@@ -149,10 +149,12 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     @Override
     public void onMapClick(LatLng latLng) {
         if (sourceMarker == null) {
-            MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src)).draggable(true);
+            MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src))
+                    .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
             sourceMarker = map.addMarker(markerOption);
         } else if (destinationMarker == null) {
-            MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.dest)).draggable(true);
+            MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.dest))
+                    .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
             destinationMarker = map.addMarker(markerOption);
             LatLng origin = sourceMarker.getPosition();
             LatLng dest = destinationMarker.getPosition();
@@ -314,7 +316,8 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         }
 
         final LatLng latLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-        MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src)).draggable(true);
+        MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src))
+                .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
         sourceMarker = map.addMarker(markerOption);
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f), new GoogleMap.CancelableCallback() {
