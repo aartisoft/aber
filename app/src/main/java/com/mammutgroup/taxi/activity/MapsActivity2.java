@@ -39,8 +39,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.mammutgroup.taxi.util.CalculateDistance;
 import com.mammutgroup.taxi.util.DirectionsJSONParser;
 
 import org.json.JSONArray;
@@ -67,6 +67,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     private Marker destinationMarker;
     private GoogleApiClient googleApiClient;
     HashMap<LatLng, Marker> allTaxisLatLng = new HashMap<>();
+    Polyline polyline;
 
     private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
         @Override
@@ -145,8 +146,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         map.setOnMarkerDragListener(this);
     }
 
-    CalculateDistance calculateDistance = new CalculateDistance();
-
     @Override
     public void onMapClick(LatLng latLng) {
         if (sourceMarker == null) {
@@ -210,16 +209,24 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     public void onMarkerDragStart(Marker marker) {
         Vibrator systemService = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         systemService.vibrate(200);
+
     }
 
     @Override
     public void onMarkerDrag(Marker marker) {
 
+        polyline.remove();
     }
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-
+//        String snippet = marker.getSnippet();
+//        if(snippet.equals("source"))
+        LatLng origin = sourceMarker.getPosition();
+        LatLng dest = destinationMarker.getPosition();
+        String url = getDirectionsUrl(origin, dest);
+        DownloadTask downloadTask = new DownloadTask();
+        downloadTask.execute(url);
     }
 
     @Override
@@ -550,7 +557,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             }
 
             // Drawing polyline in the Google Map for the i-th route
-            map.addPolyline(lineOptions);
+            polyline = map.addPolyline(lineOptions);
         }
     }
 }
