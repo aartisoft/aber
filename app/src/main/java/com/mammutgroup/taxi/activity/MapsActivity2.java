@@ -66,6 +66,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     private Marker sourceMarker;
     private Marker destinationMarker;
     private GoogleApiClient googleApiClient;
+    HashMap<LatLng, Marker> allTaxisLatLng = new HashMap<>();
 
     private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
         @Override
@@ -73,19 +74,18 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             setCurrentLocation();
         }
     };
+
     private LocationRequest mLocationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps2);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mapFragment.setHasOptionsMenu(true);
         this.setTitle("SALAAM");
-//        setHasOptionsMenu(true);
     }
 
     @Override
@@ -100,24 +100,11 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         unregisterReceiver(locationReceiver);
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.your_menu_xml, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
-
     //
     @Override
     protected void onResume() {
         super.onResume();
     }
-
-//    @Override
-//    protected void onResumeFragments() {
-//        setCurrentLocation();
-//        super.onResumeFragments();
-//
-//    }
 
     LatLngBounds mapBounds;
 
@@ -138,6 +125,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onCameraChange(CameraPosition position) {
                 mapBounds = map.getProjection().getVisibleRegion().latLngBounds;
+                markNearbyTaxi();
             }
         });
 
@@ -164,61 +152,56 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         if (sourceMarker == null) {
             MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src)).draggable(true);
             sourceMarker = map.addMarker(markerOption);
-            markNearbyTaxi(latLng);
         } else if (destinationMarker == null) {
             MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.dest)).draggable(true);
             destinationMarker = map.addMarker(markerOption);
-
             LatLng origin = sourceMarker.getPosition();
             LatLng dest = destinationMarker.getPosition();
-
-            // Getting URL to the Google Directions API
             String url = getDirectionsUrl(origin, dest);
-
             DownloadTask downloadTask = new DownloadTask();
-
-            // Start downloading json data from Google Directions API
             downloadTask.execute(url);
-            float[] floats = new float[1];
-//            Location.distanceBetween(origin.latitude, origin.longitude,
-//                    dest.latitude, dest.longitude, floats);
-//            try {
-//                String distanceOnRoad = calculateDistance.getDistance(origin, dest);
-//                Toast.makeText(this, distanceOnRoad, Toast.LENGTH_LONG);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
 
         }
     }
 
-    private void markNearbyTaxi(LatLng currentLocation) {
-        List<LatLng> nearByTaxis = getNearbyTaxiLocation(currentLocation);
+    private void markNearbyTaxi() {
+        List<LatLng> nearByTaxis = getNearbyTaxiLocation();
+        for (Marker taxiMarker : allTaxisLatLng.values()) {
+            taxiMarker.remove();
+        }
         for (final LatLng taxiLocation : nearByTaxis) {
             final MarkerOptions markerOptions = new MarkerOptions().position(
                     new LatLng(taxiLocation.latitude, taxiLocation.longitude))
                     .title("Taxi")
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi_icon))
                     .snippet("Taxi");
-            map.addMarker(markerOptions);
+            Marker marker = map.addMarker(markerOptions);
+            allTaxisLatLng.put(taxiLocation , marker);
         }
     }
 
-    private List<LatLng> getNearbyTaxiLocation(LatLng currentLocation) {
+    private List<LatLng> getNearbyTaxiLocation() {
         Random random = new Random();
+        if (mapBounds == null)
+            mapBounds = map.getProjection().getVisibleRegion().latLngBounds;
+        double neLat = mapBounds.northeast.latitude;
+        double swLat = mapBounds.southwest.latitude;
+        double latBound = neLat - swLat;
+        double neLng = mapBounds.northeast.longitude;
+        double swLng = mapBounds.southwest.longitude;
+        double lngBound = neLng - swLng;
         int taxiCount = random.nextInt(6) + 1;
         List<LatLng> latLngs = new ArrayList<>();
+        for (LatLng latLng : allTaxisLatLng.keySet()) {
+            if (latLng.latitude < neLat && latLng.latitude > swLat && latLng.longitude < neLng && latLng.longitude > swLng)
+                latLngs.add(latLng);
+        }
         for (int i = 0; i < taxiCount; i++) {
-            if(mapBounds == null)
-                mapBounds = map.getProjection().getVisibleRegion().latLngBounds;
-            double latBound = mapBounds.northeast.latitude - mapBounds.southwest.latitude;
-            double lngBound = mapBounds.northeast.longitude - mapBounds.southwest.longitude;
             Random r = new Random();
-            double lng = mapBounds.southwest.longitude + (lngBound) * r.nextDouble();
-            double lat = mapBounds.southwest.latitude + (latBound) * r.nextDouble();
-            latLngs.add(new LatLng(lat, lng));
+            double lng = swLng + (lngBound) * r.nextDouble();
+            double lat = swLat + (latBound) * r.nextDouble();
+            LatLng latLng = new LatLng(lat, lng);
+            latLngs.add(latLng);
         }
         return latLngs;
     }
@@ -330,7 +313,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f), new GoogleMap.CancelableCallback() {
             @Override
             public void onFinish() {
-                markNearbyTaxi(latLng);
             }
 
             @Override
