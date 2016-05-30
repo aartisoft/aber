@@ -76,6 +76,13 @@
             android:label="@string/title_activity_mobile_verification_code">
         </activity>
 
+        <activity android:name=".DriverHomeActivity" android:theme="@style/AppTheme.Dark">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
 
     </application>
 

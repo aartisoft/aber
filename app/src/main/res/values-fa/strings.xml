@@ -31,4 +31,9 @@
     <string name="message_progress_signup">در حال ثبت نام...</string>
     <string name="message_progress_login">در حال اجرا...</string>
     <string name="txt_label_verification_code">کد</string>
+
+
+    <string name="name_drawer_item_home">خانه</string>
+    <string name="name_drawer_item_settings">تنظیمات</string>
+    <string name="name_drawer_item_logout">خروج</string>
 </resources>
