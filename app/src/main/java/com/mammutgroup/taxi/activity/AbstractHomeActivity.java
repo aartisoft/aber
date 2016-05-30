@@ -32,7 +32,7 @@ public abstract class AbstractHomeActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceId());
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+        setupToolbar();
         accountHeader = buildAccountHeader();
         drawer = buildDrawer();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -41,6 +41,11 @@ public abstract class AbstractHomeActivity extends AppCompatActivity implements 
         mapFragment.setHasOptionsMenu(true);
     }
 
+
+    protected void setupToolbar()
+    {
+        setSupportActionBar(toolbar);
+    }
 
     protected AccountHeader buildAccountHeader()
     {
