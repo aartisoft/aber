@@ -22,6 +22,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,6 +40,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.view.DefaultClusterRenderer;
+import com.google.maps.android.ui.IconGenerator;
+import com.mammutgroup.taxi.model.TaxiItem;
 import com.mammutgroup.taxi.util.DirectionsJSONParser;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -165,6 +170,10 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
+        mClusterManager = new ClusterManager<TaxiItem>(this, map);
+        map.setOnCameraChangeListener(mClusterManager);
+        mClusterManager.setRenderer(new TaxiRendered());
+
         map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition position) {
@@ -203,23 +212,27 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         }
     }
 
+    private ClusterManager<TaxiItem> mClusterManager;
+
     private void markNearbyTaxi() {
-        List<LatLng> nearByTaxis = getNearbyTaxiLocation();
-        for (Marker taxiMarker : allTaxisLatLng.values()) {
-            taxiMarker.remove();
-        }
-        for (final LatLng taxiLocation : nearByTaxis) {
-            final MarkerOptions markerOptions = new MarkerOptions().position(
-                    new LatLng(taxiLocation.latitude, taxiLocation.longitude))
-                    .title("Taxi")
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi_icon))
-                    .snippet("Taxi");
-            Marker marker = map.addMarker(markerOptions);
-            allTaxisLatLng.put(taxiLocation, marker);
-        }
+        List<TaxiItem> nearByTaxis = getNearbyTaxiLocation();
+        mClusterManager.addItems(nearByTaxis);
+        mClusterManager.cluster();
+//        for (Marker taxiMarker : allTaxisLatLng.values()) {
+//            taxiMarker.remove();
+//        }
+//        for (final LatLng taxiLocation : nearByTaxis) {
+//            final MarkerOptions markerOptions = new MarkerOptions().position(
+//                    new LatLng(taxiLocation.latitude, taxiLocation.longitude))
+//                    .title("Taxi")
+//                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi_icon))
+//                    .snippet("Taxi");
+//            Marker marker = map.addMarker(markerOptions);
+//            allTaxisLatLng.put(taxiLocation, marker);
+//        }
     }
 
-    private List<LatLng> getNearbyTaxiLocation() {
+    private List<TaxiItem> getNearbyTaxiLocation() {
         Random random = new Random();
         if (mapBounds == null)
             mapBounds = map.getProjection().getVisibleRegion().latLngBounds;
@@ -230,17 +243,17 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         double swLng = mapBounds.southwest.longitude;
         double lngBound = neLng - swLng;
         int taxiCount = random.nextInt(6) + 1;
-        List<LatLng> latLngs = new ArrayList<>();
+        List<TaxiItem> latLngs = new ArrayList<>();
         for (LatLng latLng : allTaxisLatLng.keySet()) {
-            if (latLng.latitude < neLat && latLng.latitude > swLat && latLng.longitude < neLng && latLng.longitude > swLng)
-                latLngs.add(latLng);
+//            if (latLng.latitude < neLat && latLng.latitude > swLat && latLng.longitude < neLng && latLng.longitude > swLng)
+            latLngs.add(new TaxiItem(latLng, R.drawable.taxi_icon));
         }
         for (int i = 0; i < taxiCount; i++) {
             Random r = new Random();
             double lng = swLng + (lngBound) * r.nextDouble();
             double lat = swLat + (latBound) * r.nextDouble();
             LatLng latLng = new LatLng(lat, lng);
-            latLngs.add(latLng);
+            latLngs.add(new TaxiItem(latLng, R.drawable.taxi_icon));
         }
         return latLngs;
     }
@@ -580,6 +593,25 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
 
             // Drawing polyline in the Google Map for the i-th route
             polyline = map.addPolyline(lineOptions);
+        }
+    }
+
+    public class TaxiRendered extends DefaultClusterRenderer<TaxiItem> {
+
+        private final ImageView mImageView = new ImageView(getApplicationContext());
+        private final IconGenerator mIconGenerator = new IconGenerator(getApplicationContext());
+
+        public TaxiRendered() {
+            super(getApplicationContext(), map, mClusterManager);
+        }
+
+
+        @Override
+        protected void onBeforeClusterItemRendered(TaxiItem item,
+                                                   MarkerOptions markerOptions) {
+
+            mImageView.setImageResource(item.icon);
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi_icon)).title("TAXI");
         }
     }
 }
