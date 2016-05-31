@@ -36,4 +36,6 @@
     <string name="name_drawer_item_home">خانه</string>
     <string name="name_drawer_item_settings">تنظیمات</string>
     <string name="name_drawer_item_logout">خروج</string>
+    <string name="name_drawer_section_account">حساب کاربری</string>
+    <string name="name_drawer_item_credit">اعتبار</string>
 </resources>
