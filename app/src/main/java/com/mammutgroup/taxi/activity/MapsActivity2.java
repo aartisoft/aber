@@ -205,29 +205,32 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     @Override
     public void onMapClick(LatLng latLng) {
         if (sourceMarker == null) {
-            MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src))
-                    .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
-            sourceMarker = map.addMarker(markerOption);
             Geocoder geoCoder = new Geocoder(getBaseContext(), fa_locale);
+            String addressLine = "";
             try {
-                List<Address> fromLocation = geoCoder.getFromLocation(sourceMarker.getPosition().latitude, sourceMarker.getPosition().longitude, 1);
-                System.out.println(fromLocation.get(0).getAddressLine(1));
+                List<Address> fromLocation = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                addressLine = fromLocation.get(0).getAddressLine(1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src))
+                    .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker)).snippet(addressLine);
+            sourceMarker = map.addMarker(markerOption);
         } else if (destinationMarker == null) {
+            Geocoder geoCoder = new Geocoder(getBaseContext(), fa_locale);
+            String addressLine = "";
+            try {
+                List<Address> fromLocation = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                addressLine = fromLocation.get(0).getAddressLine(1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.dest))
-                    .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
+                    .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker)).snippet(addressLine);
             destinationMarker = map.addMarker(markerOption);
             LatLng origin = sourceMarker.getPosition();
             LatLng dest = destinationMarker.getPosition();
-            Geocoder geoCoder = new Geocoder(getBaseContext(), fa_locale);
-            try {
-                List<Address> fromLocation = geoCoder.getFromLocation(dest.latitude, dest.longitude, 1);
-                System.out.println(fromLocation.get(0).getAddressLine(1));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
             String url = getDirectionsUrl(origin, dest);
             DownloadTask downloadTask = new DownloadTask();
             downloadTask.execute(url);
@@ -377,16 +380,17 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         }
 
         final LatLng latLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-        MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src))
-                .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
-        sourceMarker = map.addMarker(markerOption);
         Geocoder geoCoder = new Geocoder(getBaseContext(), fa_locale);
+        String addressLine = "";
         try {
-            List<Address> fromLocation = geoCoder.getFromLocation(sourceMarker.getPosition().latitude, sourceMarker.getPosition().longitude, 1);
-            System.out.println(fromLocation.get(0).getAddressLine(1));
+            List<Address> fromLocation = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            addressLine = fromLocation.get(0).getAddressLine(1);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src))
+                .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker)).snippet(addressLine);
+        sourceMarker = map.addMarker(markerOption);
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f), new GoogleMap.CancelableCallback() {
             @Override
