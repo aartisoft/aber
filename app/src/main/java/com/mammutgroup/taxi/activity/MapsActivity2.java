@@ -300,6 +300,15 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     public void onMarkerDragEnd(Marker marker) {
         LatLng origin = sourceMarker.getPosition();
         LatLng dest = destinationMarker.getPosition();
+        Geocoder geoCoder = new Geocoder(getBaseContext(), fa_locale);
+        String addressLine = "";
+        try {
+            List<Address> fromLocation = geoCoder.getFromLocation(marker.getPosition().latitude, marker.getPosition().longitude, 1);
+            addressLine = fromLocation.get(0).getAddressLine(1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        marker.setSnippet(addressLine);
         String url = getDirectionsUrl(origin, dest);
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(url);
