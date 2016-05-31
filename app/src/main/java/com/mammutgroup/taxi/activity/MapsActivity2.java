@@ -20,8 +20,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -31,8 +31,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -42,6 +40,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.mammutgroup.taxi.util.DirectionsJSONParser;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +60,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallback, LocationListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerDragListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MapsActivity2 extends AbstractHomeActivity implements LocationListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerDragListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static final int LOCATION_REQ_CODE = 11;
     private static final String TAG = MapsActivity2.class.getSimpleName();
@@ -81,12 +83,53 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps2);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        mapFragment.setHasOptionsMenu(true);
-        this.setTitle("SALAAM");
+//        setContentView(R.layout.activity_maps2);
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
+//        mapFragment.setHasOptionsMenu(true);
+//        this.setTitle("SALAAM");
+    }
+
+    @Override
+    protected void setupToolbar() {
+        super.setupToolbar();
+        getSupportActionBar().setTitle("map title");
+    }
+
+    @Override
+    protected Drawer buildDrawer() {
+        return new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withHasStableIds(true)
+                .withAccountHeader(accountHeader) //set the AccountHeader we created earlier for the header
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.name_drawer_item_home).withIdentifier(1).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.name_drawer_item_settings).withIdentifier(2).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.name_drawer_item_logout).withIdentifier(3).withSelectable(false)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+                        if (iDrawerItem != null) {
+                            Long id = iDrawerItem.getIdentifier();
+                            if (id == 1) {
+
+                            } else if (id == 2) {
+
+                            } else if (id == 3) {
+
+                            }
+                        }
+
+                        return false;
+                    }
+                })
+                .withShowDrawerOnFirstLaunch(true)
+                .build();
+
+
     }
 
     @Override
@@ -129,11 +172,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                 markNearbyTaxi();
             }
         });
-
-        // Add a marker in Sydney and move the camera
-//        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -177,7 +215,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi_icon))
                     .snippet("Taxi");
             Marker marker = map.addMarker(markerOptions);
-            allTaxisLatLng.put(taxiLocation , marker);
+            allTaxisLatLng.put(taxiLocation, marker);
         }
     }
 
@@ -216,14 +254,11 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
     @Override
     public void onMarkerDrag(Marker marker) {
-
         polyline.remove();
     }
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-//        String snippet = marker.getSnippet();
-//        if(snippet.equals("source"))
         LatLng origin = sourceMarker.getPosition();
         LatLng dest = destinationMarker.getPosition();
         String url = getDirectionsUrl(origin, dest);
@@ -233,8 +268,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-//        if (progressDialog != null && progressDialog.isShowing())
-//            progressDialog.dismiss();
         Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -245,13 +278,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             String a[] = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 requestPermissions(a, LOCATION_REQ_CODE);
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(
@@ -307,7 +333,6 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                 googleApiClient);
 
         if (lastLocation == null) {
-//            lastLocation = locationManager.getLastKnownLocation("GPS");
             progressDialog = new ProgressDialog(this);
             progressDialog.setCancelable(false);
             progressDialog.setMessage("در حال اتصال به GPS");
@@ -337,15 +362,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         if (requestCode == LOCATION_REQ_CODE) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
                 LocationServices.FusedLocationApi.requestLocationUpdates(
@@ -508,6 +525,8 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                 String sDistance = parseDistance(jObject);
 
                 Log.d("XXYY", sDistance);
+
+                System.out.println("my distance : " + sDistance);
 //                Toast.makeText(this,sDistance , Toast.LENGTH_LONG);
             } catch (Exception e) {
                 e.printStackTrace();
