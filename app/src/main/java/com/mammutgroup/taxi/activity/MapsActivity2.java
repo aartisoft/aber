@@ -10,6 +10,8 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -63,6 +65,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class MapsActivity2 extends AbstractHomeActivity implements LocationListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerDragListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -88,6 +91,8 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 //        setContentView(R.layout.activity_maps2);
 //        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 //                .findFragmentById(R.id.map);
@@ -193,18 +198,35 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         map.setOnMarkerDragListener(this);
     }
 
+    String languageToLoad = "fa_IR";
+    Locale fa_locale = new Locale(languageToLoad);
+
     @Override
     public void onMapClick(LatLng latLng) {
         if (sourceMarker == null) {
             MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src))
                     .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
             sourceMarker = map.addMarker(markerOption);
+            Geocoder geoCoder = new Geocoder(getBaseContext(), fa_locale);
+            try {
+                List<Address> fromLocation = geoCoder.getFromLocation(sourceMarker.getPosition().latitude, sourceMarker.getPosition().longitude, 1);
+                System.out.println(fromLocation.get(0).getAddressLine(1));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else if (destinationMarker == null) {
             MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.dest))
                     .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
             destinationMarker = map.addMarker(markerOption);
             LatLng origin = sourceMarker.getPosition();
             LatLng dest = destinationMarker.getPosition();
+            Geocoder geoCoder = new Geocoder(getBaseContext(), fa_locale);
+            try {
+                List<Address> fromLocation = geoCoder.getFromLocation(dest.latitude, dest.longitude, 1);
+                System.out.println(fromLocation.get(0).getAddressLine(1));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             String url = getDirectionsUrl(origin, dest);
             DownloadTask downloadTask = new DownloadTask();
             downloadTask.execute(url);
@@ -357,6 +379,13 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.src))
                 .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
         sourceMarker = map.addMarker(markerOption);
+        Geocoder geoCoder = new Geocoder(getBaseContext(), fa_locale);
+        try {
+            List<Address> fromLocation = geoCoder.getFromLocation(sourceMarker.getPosition().latitude, sourceMarker.getPosition().longitude, 1);
+            System.out.println(fromLocation.get(0).getAddressLine(1));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f), new GoogleMap.CancelableCallback() {
             @Override
