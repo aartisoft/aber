@@ -46,7 +46,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
+import com.mammutgroup.taxi.TaxiApplication;
 import com.mammutgroup.taxi.model.TaxiItem;
+import com.mammutgroup.taxi.service.remote.rest.api.order.model.Order;
 import com.mammutgroup.taxi.util.DirectionsJSONParser;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -69,6 +71,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class MapsActivity2 extends AbstractHomeActivity implements LocationListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerDragListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static final int LOCATION_REQ_CODE = 11;
@@ -90,16 +97,41 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     private LocationRequest mLocationRequest;
 
     @Override
+    protected int getLayoutResourceId() {
+        return R.layout.passenger_home;
+    }
+
+    @OnClick(R.id.googlemaps_send_request)
+    void sendOrderRequest() {
+        if (sourceMarker == null || destinationMarker == null)
+            return;
+        Order order = new Order();
+        LatLng sourcePos = sourceMarker.getPosition();
+        order.setSourceCoordinateLat(sourcePos.latitude);
+        order.setSourceCoordinateLong(sourcePos.longitude);
+        LatLng destPos = destinationMarker.getPosition();
+        order.setDestinationCoordinateLat(destPos.latitude);
+        order.setDestinationCoordinateLong(destPos.longitude);
+        TaxiApplication.restClient().orderService().postOrder(
+                order, new Callback<Order>() {
+
+                    @Override
+                    public void success(Order order, Response response) {
+                        Toast.makeText(getApplicationContext(),"Request send to server", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                }
+        );
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-
-//        setContentView(R.layout.activity_maps2);
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
-//        mapFragment.setHasOptionsMenu(true);
-//        this.setTitle("SALAAM");
     }
 
     @Override
