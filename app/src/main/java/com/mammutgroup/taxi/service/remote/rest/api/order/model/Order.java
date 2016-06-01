@@ -39,7 +39,7 @@ public class Order extends BaseDto {
         return getSourceCoordinateLong;
     }
 
-    public void setGetSourceCoordinateLong(Double getSourceCoordinateLong) {
+    public void setSourceCoordinateLong(Double getSourceCoordinateLong) {
         this.getSourceCoordinateLong = getSourceCoordinateLong;
     }
 
