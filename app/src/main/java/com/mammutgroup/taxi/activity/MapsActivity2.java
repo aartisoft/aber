@@ -90,8 +90,14 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     private LocationRequest mLocationRequest;
 
     @Override
+    protected int getLayoutResourceId() {
+        return R.layout.passenger_home;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setContentView(getLayoutResourceId());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
 //        setContentView(R.layout.activity_maps2);

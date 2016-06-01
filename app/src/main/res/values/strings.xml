@@ -41,5 +41,6 @@
     <string name="name_drawer_item_logout">Logout</string>
     <string name="name_drawer_section_account">Account</string>
     <string name="name_drawer_item_credit">Credit</string>
+    <string name="sendButton">Send</string>
 
 </resources>
