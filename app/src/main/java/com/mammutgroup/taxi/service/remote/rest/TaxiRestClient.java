@@ -7,6 +7,7 @@ import com.mammutgroup.taxi.service.remote.rest.api.login.LoginService;
 import com.mammutgroup.taxi.service.remote.rest.api.order.OrderService;
 import com.mammutgroup.taxi.service.remote.rest.api.report.ReportService;
 import com.mammutgroup.taxi.service.remote.rest.api.user.UserService;
+import com.mammutgroup.taxi.service.remote.rest.api.vehicle.VehicleService;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -15,13 +16,14 @@ import retrofit.converter.GsonConverter;
  * @since 5/24/16.
  */
 public class TaxiRestClient {
-    private static final String BASE_URL = "http://78.110.116.137:8080/api/v1/"; // todo get from shared preferences
+    private static final String BASE_URL = "http://78.110.116.137:8060/api/v1/"; // todo get from shared preferences
 
     protected AuthService authService;
     protected LoginService loginService;
     protected OrderService orderService;
     protected ReportService reportService;
     protected UserService userService;
+    protected VehicleService vehicleService;
 
     public TaxiRestClient() {
         Gson gson = new GsonBuilder()
@@ -39,6 +41,7 @@ public class TaxiRestClient {
         orderService = restAdapter.create(OrderService.class);
         reportService = restAdapter.create(ReportService.class);
         userService = restAdapter.create(UserService.class);
+        vehicleService = restAdapter.create(VehicleService.class);
     }
 
     public AuthService authService() {
@@ -59,5 +62,9 @@ public class TaxiRestClient {
 
     public UserService userService() {
         return userService;
+    }
+
+    public VehicleService vehicleService(){
+        return vehicleService;
     }
 }

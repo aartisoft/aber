@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mammutgroup.taxi.activity">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mammutgroup.taxi.activity" >
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -52,7 +53,8 @@
         App Indexing. See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"
+            tools:replace="android:value" />
 
         <activity
             android:name=".MobileVerificationActivity"
@@ -75,14 +77,16 @@
 
         <activity
             android:name=".DriverHomeActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark" >
             <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 
+
+        <service android:name="com.mammutgroup.taxi.service.local.DriverLocationService" ></service>
     </application>
 
 </manifest>

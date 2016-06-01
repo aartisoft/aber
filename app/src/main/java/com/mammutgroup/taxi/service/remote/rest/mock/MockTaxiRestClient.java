@@ -9,6 +9,7 @@ import com.mammutgroup.taxi.service.remote.rest.api.login.LoginService;
 import com.mammutgroup.taxi.service.remote.rest.api.order.OrderService;
 import com.mammutgroup.taxi.service.remote.rest.api.report.ReportService;
 import com.mammutgroup.taxi.service.remote.rest.api.user.UserService;
+import com.mammutgroup.taxi.service.remote.rest.api.vehicle.VehicleService;
 import retrofit.MockRestAdapter;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -38,12 +39,13 @@ public class MockTaxiRestClient extends TaxiRestClient {
         MockAuthService mockAuthService = new MockAuthService();
         MockOrderService mockOrderService = new MockOrderService();
         MockReportService mockReportService = new MockReportService();
-
+        MockVehicleService mockVehicleService = new MockVehicleService();
         authService = mockRestAdapter.create(AuthService.class, mockAuthService);
         loginService = mockRestAdapter.create(LoginService.class, mockLoginService);
         orderService = mockRestAdapter.create(OrderService.class, mockOrderService);
         reportService = mockRestAdapter.create(ReportService.class, mockReportService);
         userService = mockRestAdapter.create(UserService.class, mockUserService);
+        vehicleService = mockRestAdapter.create(VehicleService.class,mockVehicleService);
     }
 
 }

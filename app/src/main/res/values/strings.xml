@@ -35,6 +35,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="message_progress_signup">Signing up...</string>
     <string name="message_progress_login">Signing in...</string>
+    <string name="message_dialog_gps_not_available">GPS is disabled in your device. We need your location to provide the services.</string>
+    <string name="txt_dialog_btn_enable_gps">Go to settings</string>
+    <string name="txt_dialog_btn_cancel_enable_gps">Cancel</string>
 
     <string name="name_drawer_item_home">Home</string>
     <string name="name_drawer_item_settings">Settings</string>

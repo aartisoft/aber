@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 23
@@ -36,5 +36,10 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.2.7@aar') {
         transitive = true
     }
+    compile ('io.nlopez.smartlocation:library:3.2.2') {
+        transitive = false
+    }
+    compile 'com.github.hotchemi:permissionsdispatcher:2.1.3'
+    apt 'com.github.hotchemi:permissionsdispatcher-processor:2.1.3'
 
 }
