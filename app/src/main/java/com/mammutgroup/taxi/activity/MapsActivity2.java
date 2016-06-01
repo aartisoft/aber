@@ -117,7 +117,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
 
                     @Override
                     public void success(Order order, Response response) {
-                        Toast.makeText(getApplicationContext(),"Request send to server", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.OrderRequestSent, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -330,8 +330,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-        LatLng origin = sourceMarker.getPosition();
-        LatLng dest = destinationMarker.getPosition();
         Geocoder geoCoder = new Geocoder(getBaseContext(), fa_locale);
         String addressLine = "";
         try {
@@ -340,6 +338,11 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if (destinationMarker == null)
+            return;
+        LatLng origin = sourceMarker.getPosition();
+        LatLng dest = destinationMarker.getPosition();
         marker.setSnippet(addressLine);
         String url = getDirectionsUrl(origin, dest);
         DownloadTask downloadTask = new DownloadTask();
@@ -353,6 +356,13 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(1000); // Update location every second
 
+
+        locationUpdateScheduler();
+        setCurrentLocation();
+
+    }
+
+    public void locationUpdateScheduler() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             String a[] = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
@@ -362,7 +372,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 googleApiClient, mLocationRequest, this);
-        setCurrentLocation();
 
     }
 
@@ -450,11 +459,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         if (requestCode == LOCATION_REQ_CODE) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                LocationServices.FusedLocationApi.requestLocationUpdates(
-                        googleApiClient, mLocationRequest, this);
+                locationUpdateScheduler();
                 setCurrentLocation();
             } else {
                 setDefaultLocation();

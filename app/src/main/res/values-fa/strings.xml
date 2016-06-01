@@ -41,4 +41,11 @@
     <string name="name_drawer_item_logout">خروج</string>
     <string name="name_drawer_section_account">حساب کاربری</string>
     <string name="name_drawer_item_credit">اعتبار</string>
+    <string name="sendButton">
+        ارسال
+    </string>
+    <string name="OrderRequestSent">
+        درخواست ارسال شد، لطفا کمی صبور باشید
+    </string>
+
 </resources>

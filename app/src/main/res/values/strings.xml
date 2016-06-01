@@ -45,5 +45,6 @@
     <string name="name_drawer_section_account">Account</string>
     <string name="name_drawer_item_credit">Credit</string>
     <string name="sendButton">Send</string>
+    <string name="OrderRequestSent">Request send to server, please be patient</string>
 
 </resources>
