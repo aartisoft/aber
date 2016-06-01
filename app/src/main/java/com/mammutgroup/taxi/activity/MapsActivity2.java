@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -137,7 +138,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     @Override
     protected void setupToolbar() {
         super.setupToolbar();
-        getSupportActionBar().setTitle("map title");
+        getSupportActionBar().setTitle(R.string.MapTitle);
     }
 
     @Override
@@ -276,18 +277,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         List<TaxiItem> nearByTaxis = getNearbyTaxiLocation();
         mClusterManager.addItems(nearByTaxis);
         mClusterManager.cluster();
-//        for (Marker taxiMarker : allTaxisLatLng.values()) {
-//            taxiMarker.remove();
-//        }
-//        for (final LatLng taxiLocation : nearByTaxis) {
-//            final MarkerOptions markerOptions = new MarkerOptions().position(
-//                    new LatLng(taxiLocation.latitude, taxiLocation.longitude))
-//                    .title("Taxi")
-//                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi_icon))
-//                    .snippet("Taxi");
-//            Marker marker = map.addMarker(markerOptions);
-//            allTaxisLatLng.put(taxiLocation, marker);
-//        }
     }
 
     private List<TaxiItem> getNearbyTaxiLocation() {
@@ -351,7 +340,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.GPS_Connected, Toast.LENGTH_LONG).show();
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(1000); // Update location every second
@@ -377,17 +366,17 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
 
     private void showGPSDisabledAlertToUser() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?")
+        alertDialogBuilder.setMessage(R.string.request_gps)
                 .setCancelable(false)
-                .setPositiveButton("Goto Settings Page To Enable GPS",
+                .setPositiveButton(R.string.enable_gps_msg,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Intent callGPSSettingIntent = new Intent(
-                                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                        Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                                 startActivity(callGPSSettingIntent);
                             }
                         });
-        alertDialogBuilder.setNegativeButton("Cancel",
+        alertDialogBuilder.setNegativeButton(R.string.cancel,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -424,7 +413,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         if (lastLocation == null) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setCancelable(false);
-            progressDialog.setMessage("در حال اتصال به GPS");
+            progressDialog.setMessage(getString(R.string.connecting_gps));
             progressDialog.show();
             return;
         }
@@ -480,7 +469,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
 
     @Override
     public void onConnectionSuspended(int i) {
-        Toast.makeText(this, "Suspended", Toast.LENGTH_LONG);
+        Toast.makeText(this, R.string.suspended, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -556,7 +545,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
             br.close();
 
         } catch (Exception e) {
-            Log.d("Exception while downl", e.toString());
+            Log.d(getString(R.string.download_exception), e.toString());
         } finally {
             iStream.close();
             urlConnection.disconnect();
@@ -691,7 +680,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                                                    MarkerOptions markerOptions) {
 
             mImageView.setImageResource(item.icon);
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi_icon)).title("TAXI");
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi_icon)).title(getString(R.string.taxi));
         }
     }
 }

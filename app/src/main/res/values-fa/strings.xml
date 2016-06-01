@@ -47,5 +47,28 @@
     <string name="OrderRequestSent">
         درخواست ارسال شد، لطفا کمی صبور باشید
     </string>
+    <string name="MapTitle">
+        نقشه تهران
+    </string>
+    <string name="GPS_Connected">
+        متصل شد
+    </string>
+    <string name="request_gps">
+        مکان یاب غیر فعال است، آیا میخواهید آنرا فعال کنید؟
+    </string>
+    <string name="enable_gps_msg">
+        برای فعال کردن مکان یاب به تنظیمات بروید
+    </string>
+    <string name="cancel">
+        انصراف
+    </string>
+    <string name="connecting_gps">در حال اتصال به مکان یاب</string>
+    <string name="suspended">معلق</string>
+    <string name="download_exception">
+        خطا در حال دانلود
+    </string>
+    <string name="taxi">
+        تاکسی
+    </string>
 
 </resources>

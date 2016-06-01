@@ -46,5 +46,14 @@
     <string name="name_drawer_item_credit">Credit</string>
     <string name="sendButton">Send</string>
     <string name="OrderRequestSent">Request send to server, please be patient</string>
+    <string name="MapTitle">map title</string>
+    <string name="GPS_Connected">Connected</string>
+    <string name="request_gps">GPS is disabled in your device. Would you like to enable it?</string>
+    <string name="enable_gps_msg">Goto Settings Page To Enable GPS</string>
+    <string name="cancel">Cancel</string>
+    <string name="connecting_gps">Connecting to GPS</string>
+    <string name="suspended">Suspended</string>
+    <string name="download_exception">Exception while downl</string>
+    <string name="taxi">TAXI</string>
 
 </resources>
