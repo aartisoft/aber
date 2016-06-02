@@ -8,14 +8,14 @@ package com.mammutgroup.taxi.model;
 public class Driver {
 
     private BasicLocation location;
-    private boolean readyForService;
+    private volatile boolean readyForService;
 
 
-    public BasicLocation getLocation() {
+    public synchronized BasicLocation getLocation() {
         return location;
     }
 
-    public void setLocation(BasicLocation location) {
+    public synchronized void setLocation(BasicLocation location) {
         this.location = location;
     }
 
