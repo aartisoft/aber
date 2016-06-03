@@ -115,10 +115,10 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         order.setDestinationCoordinateLong(destPos.longitude);
         TaxiApplication.restClient().orderService().postOrder(
                 order, new Callback<Order>() {
-
                     @Override
                     public void success(Order order, Response response) {
                         Toast.makeText(getApplicationContext(), R.string.OrderRequestSent, Toast.LENGTH_LONG).show();
+
                     }
 
                     @Override
@@ -345,7 +345,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(1000); // Update location every second
 
-
         locationUpdateScheduler();
         setCurrentLocation();
 
@@ -373,7 +372,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                             public void onClick(DialogInterface dialog, int id) {
                                 Intent callGPSSettingIntent = new Intent(
                                         Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                startActivity(callGPSSettingIntent);
+                                startActivityForResult(callGPSSettingIntent, 12);
                             }
                         });
         alertDialogBuilder.setNegativeButton(R.string.cancel,
@@ -386,7 +385,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         alert.show();
     }
 
-    ProgressDialog progressDialog;
+    static ProgressDialog progressDialog;
 
     private void setCurrentLocation() {
         if (googleApiClient != null && googleApiClient.isConnected()) {
@@ -411,10 +410,10 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                 googleApiClient);
 
         if (lastLocation == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setCancelable(false);
-            progressDialog.setMessage(getString(R.string.connecting_gps));
-            progressDialog.show();
+//            progressDialog = new ProgressDialog(this);
+//            progressDialog.setCancelable(false);
+//            progressDialog.setMessage(getString(R.string.connecting_gps));
+            progressDialog = ProgressDialog.show(this, "", getString(R.string.connecting_gps), true, false);
             return;
         }
 
