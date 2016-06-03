@@ -3,7 +3,7 @@ package com.mammutgroup.taxi.service.local;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationManager;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -17,6 +17,8 @@ import io.nlopez.smartlocation.location.config.LocationParams;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 import retrofit.RetrofitError;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -38,11 +40,14 @@ public class DriverLocationService extends Service implements OnLocationUpdatedL
     private final ArrayBlockingQueue<BasicLocation> locations = new ArrayBlockingQueue<BasicLocation>(MAX_LOCATION_BUFFER);
     private volatile boolean isRunning = false;
     private Thread sender ;
+    private final IBinder binder = new LocalBinder();
+    private final List<OnLocationUpdatedListener> updatedListeners = new ArrayList<OnLocationUpdatedListener>();
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        Log.d(TAG,"Bind the new client.");
+        return binder;
     }
 
     @Override
@@ -52,6 +57,7 @@ public class DriverLocationService extends Service implements OnLocationUpdatedL
         provider.setCheckLocationSettings(true);
         smartLocation = new SmartLocation.Builder(this).logging(true).build();
         restClient = TaxiApplication.restClient();
+        Log.d(TAG,"Service created.");
     }
 
     @Override
@@ -114,12 +120,45 @@ public class DriverLocationService extends Service implements OnLocationUpdatedL
 
     @Override
     public void onLocationUpdated(Location location) {
+        // call listeners
+        for(OnLocationUpdatedListener listener : updatedListeners)
+            listener.onLocationUpdated(location);
+
         try {
             //TODO: what will happen if caller get blocked ????
             locations.put(new BasicLocation(location));
-            Log.d(TAG,"Location Update:(" + location.getLongitude()+","+location.getLatitude()+")");
+            Log.d(TAG,"Location Update:(" + location.getLatitude()+","+location.getLongitude()+")");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public class LocalBinder extends Binder implements LocationService
+    {
+        private DriverLocationService locationService;
+        public LocalBinder()
+        {
+            this.locationService = DriverLocationService.this;
+        }
+
+
+        @Override
+        public Location getLastLocation() {
+            return smartLocation.location(provider).getLastLocation();
+        }
+
+        @Override
+        public void requestLocationUpdates(OnLocationUpdatedListener listener) throws ServiceNotStartedException {
+            if(!isRunning)
+                throw new ServiceNotStartedException();
+            updatedListeners.add(listener);
+        }
+
+        @Override
+        public void removeLocationUpdates(OnLocationUpdatedListener listener) {
+            updatedListeners.remove(listener);
+        }
+
+
     }
 }
