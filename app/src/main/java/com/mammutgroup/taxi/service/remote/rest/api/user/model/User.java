@@ -17,12 +17,21 @@ public class User extends BaseDto {
     private String fullName;
     private String gender;
     private boolean hasNumber;
-    @SerializedName(value = "number",alternate = {"numberInfo"})
+    @SerializedName(value = "number", alternate = {"numberInfo"})
     private MobileNumber number;
     private String type;
     private String email;
     private ProfilePicture profilePicture;
     private boolean mobileVerified;
+    private String profileImg;
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
 
     public String getUsername() {
         return username;

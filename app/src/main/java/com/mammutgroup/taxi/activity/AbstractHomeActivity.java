@@ -1,20 +1,31 @@
 package com.mammutgroup.taxi.activity;
 
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.mammutgroup.taxi.config.UserConfig;
+import com.mammutgroup.taxi.service.remote.rest.api.user.model.User;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
+import java.io.File;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * This class provides base class for home activity with a map and drawer.
+ *
  * @author mushtu
  * @since 5/29/16.
  */
@@ -42,16 +53,44 @@ public abstract class AbstractHomeActivity extends AppCompatActivity implements 
     }
 
 
-    protected void setupToolbar()
-    {
+    protected void setupToolbar() {
         setSupportActionBar(toolbar);
     }
 
-    protected AccountHeader buildAccountHeader()
-    {
-        drawerProfile = new ProfileDrawerItem().
-            withName("mushtu").
-            withEmail("mushtu@gmail.com");
+    protected AccountHeader buildAccountHeader() {
+        //TODO change this
+        User currentUser = UserConfig.getCurrentUser();
+
+        String name = "mushtu";
+        String email = "mushtu@gmail.com";
+        Bitmap profilePhoto = null;
+
+        if (currentUser != null) {
+
+            String fullName = currentUser.getFullName();
+            if (fullName != null && fullName != "")
+                name = fullName;
+            String email1 = currentUser.getEmail();
+            if (email1 != null && email1 != "")
+                email = email1;
+
+            if (currentUser.getProfileImg() != null) {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                ContextWrapper cw = new ContextWrapper(this);
+                File directory = cw.getDir("media", Context.MODE_PRIVATE);
+                profilePhoto = BitmapFactory.decodeFile(directory + "/" + currentUser.getProfileImg(), options);
+            }
+        }
+
+        if (profilePhoto != null)
+            drawerProfile = new ProfileDrawerItem().
+                    withName(name).
+                    withEmail(email).withIcon(profilePhoto);
+        else
+            drawerProfile = new ProfileDrawerItem().
+                    withName(name).
+                    withEmail(email);
 
         return new AccountHeaderBuilder()
                 .withActivity(this)
@@ -70,9 +109,10 @@ public abstract class AbstractHomeActivity extends AppCompatActivity implements 
     /**
      * default layout resource id.
      * In case of overriding the method your layout must at least contains toolbar widget and map fragment.
+     *
      * @return
      */
-    protected int getLayoutResourceId(){
+    protected int getLayoutResourceId() {
         return R.layout.activity_abstract_home;
     }
 
