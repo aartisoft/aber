@@ -2,6 +2,7 @@ package com.mammutgroup.taxi;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 import com.mammutgroup.taxi.config.UserConfig;
 import com.mammutgroup.taxi.service.remote.rest.TaxiRestClient;
 import com.mammutgroup.taxi.service.remote.rest.mock.MockTaxiRestClient;
@@ -10,7 +11,7 @@ import com.mammutgroup.taxi.service.remote.rest.mock.MockTaxiRestClient;
  * @author mushtu
  * @since 5/24/16.
  */
-public class TaxiApplication extends Application {
+public class TaxiApplication extends MultiDexApplication {
 
     public static volatile Context context;
     private static TaxiRestClient taxiRestClient;

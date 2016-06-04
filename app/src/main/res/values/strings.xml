@@ -9,10 +9,16 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_maps2">Map</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_trip_requests">Passengers</string>
+    <string name="title_activity_passenger_order_map">Trip</string>
 
     <string name="title_toolbar_mobile_verification_code">Phone verification</string>
     <string name="title_toolbar_mobile_verification">Your phone</string>
     <string name="title_toolbar_signup">Signing up</string>
+
+    <string name="title_menu_take_passenger">Take Passenger</string>
+    <string name="title_menu_remove">Remove</string>
+    <string name="title_menu_refresh">Refresh</string>
 
     <string name="no_internet_connection">No internet connection</string>
     <string name="coud_not_load_map" />
@@ -30,9 +36,14 @@
     <string name="txt_btn_submit_mobile">Confirm</string>
     <string name="txt_btn_verify_code">Verify</string>
     <string name="txt_label_verification_code">Code</string>
+    <string name="txt_label_trip_origin">Origin:</string>
+    <string name="txt_label_trip_destination">Destination:</string>
 
 
     <string name="hello_world">Hello world!</string>
+    <string name="message_dialog_take_passenger_confirmation">We will send your response to passenger.</string>
+    <string name="message_dialog_remove_order_from_list_confirmation">Are you sure?</string>
+
     <string name="message_progress_signup">Signing up...</string>
     <string name="message_progress_login">Signing in...</string>
     <string name="message_dialog_gps_not_available">GPS is disabled in your device. We need your location to provide the services.</string>
@@ -66,5 +77,9 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <string name="x_selected">%1$d selected</string>
+
+
 
 </resources>

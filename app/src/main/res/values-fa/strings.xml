@@ -8,10 +8,15 @@
     <string name="title_activity_mobile_verification_code">تایید شماره موبایل</string>
     <string name="title_activity_login">ورود به سیستم</string>
     <string name="title_activity_maps2">نقشه</string>
+    <string name="title_activity_trip_requests">مسافرها</string>
+    <string name="title_activity_passenger_order_map">سفر</string>
 
     <string name="title_toolbar_signup">ثبت نام</string>
     <string name="title_toolbar_mobile_verification">شماره همراه شما</string>
     <string name="title_toolbar_mobile_verification_code">تایید شماره موبایل</string>
+    <string name="title_menu_take_passenger">گرفتن مسافر</string>
+    <string name="title_menu_remove">حذف</string>
+    <string name="title_menu_refresh">به روز رسانی</string>
 
     <string name="no_internet_connection">ریدی اینترنت نداری</string>
     <string name="coud_not_load_map" />
@@ -81,4 +86,5 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string name="x_selected">%1$d انتخاب شده</string>
 </resources>

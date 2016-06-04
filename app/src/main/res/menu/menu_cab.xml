@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/mit_take_passenger"
+            android:icon="@mipmap/ic_take_passenger"
+            android:title="@string/title_menu_take_passenger"
+            app:showAsAction="ifRoom" />
+
+    <item
+            android:id="@+id/mit_remove"
+            android:icon="@mipmap/ic_trash"
+            android:title="@string/title_menu_remove"
+            app:showAsAction="ifRoom" />
+
+</menu>
