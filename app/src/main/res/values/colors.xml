@@ -9,6 +9,11 @@
     <color name="colorPrimaryDark">#93255E</color>
     <color name="colorPrimaryDarker">#790B44</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorIcons">#FFF</color>
+    <color name="item_background">#FFF</color>
+    <color name="divider">#CCC</color>
+
+    <color name="activated_selected_light" type="color">#3e000000</color>
 
     <color name="black">#000000</color>
     <color name="jet">#222222</color>

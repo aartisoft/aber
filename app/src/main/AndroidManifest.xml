@@ -85,8 +85,23 @@
             <!--</intent-filter>-->
         </activity>
 
+        <service android:name="com.mammutgroup.taxi.service.local.DriverLocationService" />
 
-        <service android:name="com.mammutgroup.taxi.service.local.DriverLocationService" ></service>
+        <activity
+            android:name=".OrderRequestsActivity"
+            android:label="@string/title_activity_trip_requests"
+            android:theme="@style/AppTheme.Dark">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".PassengerOrderMapActivity"
+            android:theme="@style/AppTheme.Dark"
+            android:label="@string/title_activity_passenger_order_map" >
+        </activity>
     </application>
 
 </manifest>

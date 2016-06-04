@@ -18,4 +18,8 @@
     <integer name="anim_duration_long">500</integer>
     <integer name="anim_duration_medium">300</integer>
 
+
+    <dimen name="item_padding">2dp</dimen>
+    <dimen name="item_height">80dp</dimen>
+
 </resources>
