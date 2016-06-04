@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mammutgroup.taxi.activity" >
+    package="com.mammutgroup.taxi.activity">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -68,6 +68,9 @@
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"></activity>
         <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_edit_profile"></activity>
+        <activity
             android:name=".MapsActivity2"
             android:label="@string/title_activity_maps2"
             android:theme="@style/AppTheme.Dark" />
@@ -77,16 +80,16 @@
 
         <activity
             android:name=".DriverHomeActivity"
-            android:theme="@style/AppTheme.Dark" >
+            android:theme="@style/AppTheme.Dark">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 
 
-        <service android:name="com.mammutgroup.taxi.service.local.DriverLocationService" ></service>
+        <service android:name="com.mammutgroup.taxi.service.local.DriverLocationService"></service>
     </application>
 
 </manifest>
