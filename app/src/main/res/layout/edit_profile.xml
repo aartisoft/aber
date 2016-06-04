@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:background="?attr/colorPrimary"-->
+        <!--android:elevation="4dp"-->
+        <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"></android.support.v7.widget.Toolbar>-->
+
+        <ImageView
+            android:id="@+id/header_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/common_full_open_on_phone" />
+
+        <ImageButton
+            android:id="@+id/user_profile_photo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/header_cover_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-60dp"
+            android:background="@drawable/profile_circular_border_imageview"
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/taxi_icon" />
+
+        <RelativeLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header_cover_image"
+            android:background="#ebca0707"
+            android:elevation="4dp"
+            android:paddingBottom="24dp">
+
+
+            <ImageView
+                android:id="@+id/add_friend"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_toLeftOf="@+id/drop_down_option_menu"
+                android:src="@drawable/common_plus_signin_btn_icon_dark_disabled" />
+
+            <ImageView
+                android:id="@+id/drop_down_option_menu"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_media_route_on_mono_dark" />
+
+            <TextView
+                android:id="@+id/user_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="76dp"
+                android:text="Viral Android"
+                android:textColor="#fff"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/user_profile_short_bio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_profile_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="Android free tutorials and example"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_layout"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/input_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/txt_label_email" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/input_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/txt_label_user_name" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/input_family"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/txt_label_family" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:entries="@array/sex_arrays"
+                android:prompt="@string/sex_prompt" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:padding="12dp"
+                android:text="@string/txt_btn_save" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

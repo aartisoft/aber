@@ -66,6 +66,17 @@
     <string name="suspended">Suspended</string>
     <string name="download_exception">Exception while downl</string>
     <string name="taxi">TAXI</string>
+    <string name="title_edit_profile">Edit Profile</string>
+    <string name="txt_label_family">your family</string>
+    <string name="sex_prompt">Choose your sex</string>
+    <string name="txt_btn_save">save</string>
+    <string name="profile_successfully_saved">your profile successfully saved</string>
+    <string name="invalid_email_address">invalid email address</string>
+
+    <string-array name="sex_arrays">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 
     <string name="x_selected">%1$d selected</string>
 

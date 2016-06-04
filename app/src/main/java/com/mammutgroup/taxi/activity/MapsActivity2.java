@@ -133,6 +133,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        TaxiApplication.initApplication();
     }
 
     @Override
@@ -159,7 +160,8 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                         if (iDrawerItem != null) {
                             Long id = iDrawerItem.getIdentifier();
                             if (id == 1) {
-
+                                Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                                startActivity(intent);
                             } else if (id == 2) {
 
                             } else if (id == 3) {

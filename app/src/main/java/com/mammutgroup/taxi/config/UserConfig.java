@@ -73,7 +73,7 @@ public class UserConfig {
     }
 
 
-    public void setCurrentUser(User user)
+    public static void setCurrentUser(User user)
     {
         synchronized (sync)
         {
@@ -81,7 +81,7 @@ public class UserConfig {
         }
     }
 
-    public User getCurrentUser()
+    public static User getCurrentUser()
     {
         synchronized (sync)
         {
