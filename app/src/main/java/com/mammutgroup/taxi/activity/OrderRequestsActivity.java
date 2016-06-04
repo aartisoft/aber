@@ -175,7 +175,7 @@ public class OrderRequestsActivity extends AppCompatActivity implements OrdersRe
             onIconClicked(index);
             return;
         }
-        transitToMap();
+        transitToMap(index);
     }
 
     @Override
@@ -192,11 +192,17 @@ public class OrderRequestsActivity extends AppCompatActivity implements OrdersRe
         //mCab.setTitle(getString(R.string.x_selected, orderAdapter.getSelectedCount()));
     }
 
-    private void transitToMap()
+    private void transitToMap(int index)
     {
-        Order order = orderAdapter.getSelectedOrder();
+        Order order = orders.get(index);
         if(order != null) {
             Intent intent = new Intent(this, PassengerOrderMapActivity.class);
+            order.setSourceCoordinateLat(35.755896);
+            order.setSourceCoordinateLong(51.376748);
+            order.setDestinationCoordinateLat(35.745448);
+            order.setDestinationCoordinateLong(51.393142);
+            //todo remove setting lat & long
+
             intent.putExtra("order",order);
             startActivity(intent);
         }
