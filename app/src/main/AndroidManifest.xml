@@ -77,8 +77,13 @@
             android:label="@string/title_activity_maps2"
             android:theme="@style/AppTheme.Dark" />
         <activity
-            android:name=".MobileVerificationCodeActivity"
-            android:label="@string/title_activity_mobile_verification_code"></activity>
+                android:name=".MobileVerificationCodeActivity"
+                android:label="@string/title_activity_mobile_verification_code"
+                android:parentActivityName=".LoginActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".LoginActivity" />
+        </activity>
 
         <activity
             android:name=".DriverHomeActivity"

@@ -38,6 +38,7 @@
     <string name="txt_label_verification_code">Code</string>
     <string name="txt_label_trip_origin">Origin:</string>
     <string name="txt_label_trip_destination">Destination:</string>
+    <string name="txt_label_resend_code">resend code!</string>
 
 
     <string name="hello_world">Hello world!</string>

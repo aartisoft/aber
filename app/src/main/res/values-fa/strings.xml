@@ -44,7 +44,7 @@
     <string name="txt_label_verification_code">کد</string>
     <string name="txt_label_trip_origin">مبدا:</string>
     <string name="txt_label_trip_destination">مقصد:</string>
-
+    <string name="txt_label_resend_code">ارسال مجدد</string>
     <string name="name_drawer_item_home">خانه</string>
     <string name="name_drawer_item_settings">تنظیمات</string>
     <string name="name_drawer_item_logout">خروج</string>

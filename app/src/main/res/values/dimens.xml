@@ -22,4 +22,6 @@
     <dimen name="item_padding">2dp</dimen>
     <dimen name="item_height">80dp</dimen>
 
+    <dimen name="input_text_size">14dp</dimen>
+
 </resources>
