@@ -33,13 +33,17 @@
     <string name="txt_label_mobile_number">شماره همراه</string>
     <string name="txt_btn_submit_mobile">تایید</string>
     <string name="txt_btn_verify_code">تایید</string>
+
+    <string name="message_dialog_take_passenger_confirmation">درخواست شما ارسال خواهد شد.</string>
+    <string name="message_dialog_remove_order_from_list_confirmation">مطمءن هستید؟</string>
     <string name="message_progress_signup">در حال ثبت نام...</string>
     <string name="message_progress_login">در حال اجرا...</string>
     <string name="message_dialog_gps_not_available">جی پی اس دستگاه شما فعال نیست. برای اراپه سرویس نیاز به مکان شما داریم.</string>
     <string name="txt_dialog_btn_enable_gps">رفتن به تنظیمات</string>
     <string name="txt_dialog_btn_cancel_enable_gps">لغو</string>
     <string name="txt_label_verification_code">کد</string>
-
+    <string name="txt_label_trip_origin">مبدا:</string>
+    <string name="txt_label_trip_destination">مقصد:</string>
 
     <string name="name_drawer_item_home">خانه</string>
     <string name="name_drawer_item_settings">تنظیمات</string>
