@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,28 +25,74 @@
     <!--android:layout_height="wrap_content"-->
     <!--tools:context="com.mammutgroup.taxi.activity.MapsActivity2">-->
     <!--</fragment>-->
+    <!--<RelativeLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<View-->
+    <!--android:id="@+id/dummyView"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_centerInParent="true" />-->
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.mammutgroup.taxi.activity.MapsActivity2"
-        />
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        tools:context="com.mammutgroup.taxi.activity.MapsActivity2" />
+
+    <LinearLayout
+        android:id="@+id/googlemaps_button_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/googlemaps_src_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_label_trip_origin" />
+
+        <TextView
+            android:id="@+id/googlemaps_src_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/googlemaps_dst_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_label_trip_destination" />
+
+        <TextView
+            android:id="@+id/googlemaps_dst_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/googlemaps_send_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/sendButton" />
+
+    </LinearLayout>
+
 
     <!--<Button-->
-        <!--android:id="@+id/btn_sendRequest"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="48dp"-->
-        <!--android:background="#80000000"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:padding="4dp"-->
-        <!--android:text="@string/sendButton" />-->
+    <!--android:id="@+id/btn_sendRequest"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:background="#80000000"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:padding="4dp"-->
+    <!--android:text="@string/sendButton" />-->
 
-    <Button android:id="@+id/googlemaps_send_request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/sendButton"/>
 
-</RelativeLayout>
+</LinearLayout>

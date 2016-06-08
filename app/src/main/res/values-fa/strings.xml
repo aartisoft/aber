@@ -87,4 +87,5 @@
         <item>Female</item>
     </string-array>
     <string name="x_selected">%1$d انتخاب شده</string>
+    <string name="txt_label_source">Source</string>
 </resources>

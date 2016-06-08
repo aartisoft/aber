@@ -79,7 +79,7 @@
     </string-array>
 
     <string name="x_selected">%1$d selected</string>
-
+    <string name="txt_label_source">Source</string>
 
 
 </resources>

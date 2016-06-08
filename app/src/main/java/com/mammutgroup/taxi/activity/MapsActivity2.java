@@ -27,6 +27,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -72,6 +74,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -87,6 +90,12 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     private GoogleApiClient googleApiClient;
     HashMap<LatLng, Marker> allTaxisLatLng = new HashMap<>();
     Polyline polyline;
+    @Bind(R.id.googlemaps_button_fragment)
+    LinearLayout buttonLayout;
+    @Bind(R.id.googlemaps_src_text)
+    TextView srcText;
+    @Bind(R.id.googlemaps_dst_text)
+    TextView dstText;
 
     private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
         @Override
@@ -270,6 +279,9 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
             DownloadTask downloadTask = new DownloadTask();
             downloadTask.execute(url);
 
+            buttonLayout.setVisibility(View.VISIBLE);
+            srcText.setText(sourceMarker.getSnippet());
+            dstText.setText(destinationMarker.getSnippet());
         }
     }
 
