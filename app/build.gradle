@@ -46,5 +46,6 @@ dependencies {
     compile('com.afollestad:material-cab:0.1.11@aar') {
         transitive = true
     }
+    compile 'com.getbase:floatingactionbutton:1.10.1'
 
 }

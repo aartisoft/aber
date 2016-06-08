@@ -44,18 +44,23 @@
     <string name="hello_world">Hello world!</string>
     <string name="message_dialog_take_passenger_confirmation">We will send your response to passenger.</string>
     <string name="message_dialog_remove_order_from_list_confirmation">Are you sure?</string>
+    <string name="message_dialog_cannot_be_outof_service">You can not get out of service for now!</string>
+
 
     <string name="message_progress_signup">Signing up...</string>
     <string name="message_progress_login">Signing in...</string>
     <string name="message_dialog_gps_not_available">GPS is disabled in your device. We need your location to provide the services.</string>
     <string name="txt_dialog_btn_enable_gps">Go to settings</string>
     <string name="txt_dialog_btn_cancel_enable_gps">Cancel</string>
+    <string name="message_progress_working">In progress...</string>
 
     <string name="name_drawer_item_home">Home</string>
     <string name="name_drawer_item_settings">Settings</string>
     <string name="name_drawer_item_logout">Logout</string>
     <string name="name_drawer_section_account">Account</string>
     <string name="name_drawer_item_credit">Credit</string>
+    <string name="name_drawer_item_orders">Orders</string>
+
     <string name="sendButton">Send</string>
     <string name="OrderRequestSent">Request send to server, please be patient</string>
     <string name="MapTitle">map title</string>
@@ -80,7 +85,10 @@
     </string-array>
 
     <string name="x_selected">%1$d selected</string>
-
+    <string name="title_fab_cancel_trip">Cancel Trip</string>
+    <string name="title_fab_notify_arrived">Arrived Notification</string>
+    <string name="title_fab_start_trip">Start Trip</string>
+    <string name="title_fab_end_trip">End Trip</string>
 
 
 </resources>

@@ -38,6 +38,7 @@
     <string name="message_dialog_remove_order_from_list_confirmation">مطمءن هستید؟</string>
     <string name="message_progress_signup">در حال ثبت نام...</string>
     <string name="message_progress_login">در حال اجرا...</string>
+    <string name="message_progress_working">در حال درخواست...</string>
     <string name="message_dialog_gps_not_available">جی پی اس دستگاه شما فعال نیست. برای اراپه سرویس نیاز به مکان شما داریم.</string>
     <string name="txt_dialog_btn_enable_gps">رفتن به تنظیمات</string>
     <string name="txt_dialog_btn_cancel_enable_gps">لغو</string>
@@ -50,6 +51,7 @@
     <string name="name_drawer_item_logout">خروج</string>
     <string name="name_drawer_section_account">حساب کاربری</string>
     <string name="name_drawer_item_credit">اعتبار</string>
+    <string name="name_drawer_item_orders">درخواست های سفر</string>
     <string name="sendButton">
         ارسال
     </string>
@@ -91,4 +93,11 @@
         <item>Female</item>
     </string-array>
     <string name="x_selected">%1$d انتخاب شده</string>
+
+    <string name="message_dialog_cannot_be_outof_service">You can not be out of service for now!</string>
+
+    <string name="title_fab_cancel_trip">کنسل کردن سفر</string>
+    <string name="title_fab_notify_arrived">اعلان رسیدن به محل</string>
+    <string name="title_fab_start_trip">آغاز سفر</string>
+    <string name="title_fab_end_trip">پایان سفر</string>
 </resources>
