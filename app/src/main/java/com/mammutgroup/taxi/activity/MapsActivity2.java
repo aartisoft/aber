@@ -18,6 +18,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -27,6 +28,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -50,6 +53,7 @@ import com.google.maps.android.ui.IconGenerator;
 import com.mammutgroup.taxi.TaxiApplication;
 import com.mammutgroup.taxi.model.TaxiItem;
 import com.mammutgroup.taxi.service.remote.rest.api.order.model.Order;
+import com.mammutgroup.taxi.service.remote.rest.api.order.model.PriceResponse;
 import com.mammutgroup.taxi.util.DirectionsJSONParser;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -72,6 +76,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -85,8 +90,31 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     private Marker sourceMarker;
     private Marker destinationMarker;
     private GoogleApiClient googleApiClient;
-    HashMap<LatLng, Marker> allTaxisLatLng = new HashMap<>();
-    Polyline polyline;
+    private HashMap<LatLng, Marker> allTaxisLatLng = new HashMap<>();
+    private Polyline polyline;
+    private ClusterManager<TaxiItem> mClusterManager;
+    private LatLngBounds mapBounds;
+    private String languageToLoad = "fa_IR";
+    private Locale fa_locale = new Locale(languageToLoad);
+    static ProgressDialog progressDialog;
+    private float tehranLat = 35.6937869f;
+    private float tehranLng = 51.4392857f;
+    private String approximateTime;
+    private String distance;
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Bind(R.id.googlemaps_bottom_fragment)
+    LinearLayout bottomLayout;
+    @Bind(R.id.googlemaps_src_text)
+    TextView srcTextView;
+    @Bind(R.id.googlemaps_dst_text)
+    TextView dstTextView;
+    @Bind(R.id.googlemaps_prc_text)
+    TextView priceTextView;
+    @Bind(R.id.googlemaps_approximate_time_text)
+    TextView approximateTimeTextView;
+    @Bind(R.id.googlemaps_distance_text)
+    TextView distanceTextView;
 
     private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
         @Override
@@ -113,12 +141,37 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         LatLng destPos = destinationMarker.getPosition();
         order.setDestinationCoordinateLat(destPos.latitude);
         order.setDestinationCoordinateLong(destPos.longitude);
-        TaxiApplication.restClient().orderService().postOrder(
+        TaxiApplication.restClient().orderService().createOrder(
                 order, new Callback<Order>() {
                     @Override
                     public void success(Order order, Response response) {
                         Toast.makeText(getApplicationContext(), R.string.OrderRequestSent, Toast.LENGTH_LONG).show();
+                    }
 
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                }
+        );
+    }
+
+    private void sendPriceRequest() {
+        if (sourceMarker == null || destinationMarker == null)
+            return;
+        Order order = new Order();
+        LatLng sourcePos = sourceMarker.getPosition();
+        order.setSourceCoordinateLat(sourcePos.latitude);
+        order.setSourceCoordinateLong(sourcePos.longitude);
+        LatLng destPos = destinationMarker.getPosition();
+        order.setDestinationCoordinateLat(destPos.latitude);
+        order.setDestinationCoordinateLong(destPos.longitude);
+        TaxiApplication.restClient().orderService().calculatePrice(
+                order, new Callback<PriceResponse>() {
+                    @Override
+                    public void success(PriceResponse priceResponse, Response response) {
+                        String price = priceResponse.getMinPrice() + " - " + priceResponse.getMaxPrice();
+                        priceTextView.setText(price);
                     }
 
                     @Override
@@ -179,6 +232,29 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     }
 
     @Override
+    public void onBackPressed() {
+        if (bottomLayout.getVisibility() == View.VISIBLE) {
+            bottomLayout.setVisibility(View.GONE);
+        } else{
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, R.string.double_press_back, Toast.LENGTH_LONG).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         registerReceiver(locationReceiver, new IntentFilter("android.location.PROVIDERS_CHANGED"));
@@ -195,8 +271,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     protected void onResume() {
         super.onResume();
     }
-
-    LatLngBounds mapBounds;
 
     /**
      * Manipulates the map once available.
@@ -234,8 +308,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         map.setOnMarkerDragListener(this);
     }
 
-    String languageToLoad = "fa_IR";
-    Locale fa_locale = new Locale(languageToLoad);
 
     @Override
     public void onMapClick(LatLng latLng) {
@@ -270,10 +342,19 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
             DownloadTask downloadTask = new DownloadTask();
             downloadTask.execute(url);
 
+            fillBottomFragment();
+
         }
     }
 
-    private ClusterManager<TaxiItem> mClusterManager;
+    private void fillBottomFragment() {
+        bottomLayout.setVisibility(View.VISIBLE);
+        srcTextView.setText(sourceMarker.getSnippet());
+        dstTextView.setText(destinationMarker.getSnippet());
+        approximateTimeTextView.setText(approximateTime);
+        distanceTextView.setText(distance);
+        sendPriceRequest();
+    }
 
     private void markNearbyTaxi() {
         List<TaxiItem> nearByTaxis = getNearbyTaxiLocation();
@@ -329,7 +410,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         if (destinationMarker == null)
             return;
         LatLng origin = sourceMarker.getPosition();
@@ -338,6 +418,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         String url = getDirectionsUrl(origin, dest);
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(url);
+        fillBottomFragment();
     }
 
     @Override
@@ -386,8 +467,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
-
-    static ProgressDialog progressDialog;
 
     private void setCurrentLocation() {
         if (googleApiClient != null && googleApiClient.isConnected()) {
@@ -458,9 +537,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
-    float tehranLat = 35.6937869f;
-    float tehranLng = 51.4392857f;
 
     private void setDefaultLocation() {
         LatLng latLng = new LatLng(tehranLat, tehranLng);
@@ -605,28 +681,23 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                 // Starts parsing data
                 routes = parser.parseRoute(jObject);
 
-                String sDistance = parseDistance(jObject);
+                setDistanceAndDuration(jObject);
 
-                Log.d("XXYY", sDistance);
-
-                System.out.println("my distance : " + sDistance);
-//                Toast.makeText(this,sDistance , Toast.LENGTH_LONG);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return routes;
         }
 
-        private String parseDistance(JSONObject jObject) throws JSONException {
+        private void setDistanceAndDuration(JSONObject jObject) throws JSONException {
             JSONArray routes = jObject.getJSONArray("routes");
             JSONObject route = routes.getJSONObject(0);
-
             JSONArray legs = route.getJSONArray("legs");
-
             JSONObject steps = legs.getJSONObject(0);
-
-            JSONObject distance = steps.getJSONObject("distance");
-            return distance.getString("text");
+            JSONObject distanceObj = steps.getJSONObject("distance");
+            distance = distanceObj.getString("text");
+            JSONObject durationObj = steps.getJSONObject("duration");
+            approximateTime = durationObj.getString("text");
         }
 
         // Executes in UI thread, after the parsing process
@@ -661,6 +732,8 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                 lineOptions.color(Color.RED);
             }
 
+            approximateTimeTextView.setText(approximateTime);
+            distanceTextView.setText(distance);
             // Drawing polyline in the Google Map for the i-th route
             polyline = map.addPolyline(lineOptions);
         }

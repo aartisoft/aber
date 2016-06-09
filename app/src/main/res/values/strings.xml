@@ -89,6 +89,11 @@
     <string name="title_fab_notify_arrived">Arrived notification</string>
     <string name="title_fab_start_trip">Start trip</string>
     <string name="title_fab_end_trip">End trip</string>
-    <string name="titile_fab_edit_price">Edit Price</string>
+    <string name="title_fab_edit_price">Edit Price</string>
+    <string name="txt_label_source">Source</string>
+    <string name="txt_label_trip_price">Price:</string>
+    <string name="txt_label_trip_distance">Distance:</string>
+    <string name="txt_label_trip_approximate_time">approximate time:</string>
+    <string name="double_press_back">Please click BACK again to exit</string>
 
 </resources>
