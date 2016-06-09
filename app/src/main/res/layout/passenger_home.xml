@@ -46,53 +46,113 @@
         tools:context="com.mammutgroup.taxi.activity.MapsActivity2" />
 
     <LinearLayout
-        android:id="@+id/googlemaps_button_fragment"
+        android:id="@+id/googlemaps_bottom_fragment"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:layout_weight="1"
+        android:background="#3E80B4"
+        android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/googlemaps_src_lable"
+        <LinearLayout
+            android:id="@+id/googlemaps_src_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_label_trip_origin" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/googlemaps_src_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/googlemaps_src_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_label_trip_origin" />
 
-        <TextView
-            android:id="@+id/googlemaps_dst_lable"
+            <TextView
+                android:id="@+id/googlemaps_src_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/googlemaps_dst_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_label_trip_destination" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/googlemaps_dst_text"
+            <TextView
+                android:id="@+id/googlemaps_dst_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_label_trip_destination" />
+
+            <TextView
+                android:id="@+id/googlemaps_dst_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/googlemaps_price_fragment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/googlemaps_prc_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_label_trip_price" />
+
+            <TextView
+                android:id="@+id/googlemaps_prc_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/googlemaps_distance_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/googlemaps_distance_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_label_trip_distance" />
+
+            <TextView
+                android:id="@+id/googlemaps_distance_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/googlemaps_approximate_time_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/googlemaps_approximate_time_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_label_trip_approximate_time" />
+
+            <TextView
+                android:id="@+id/googlemaps_approximate_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/googlemaps_send_request"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:text="@string/sendButton" />
-
     </LinearLayout>
 
 
-    <!--<Button-->
-    <!--android:id="@+id/btn_sendRequest"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="48dp"-->
-    <!--android:background="#80000000"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:padding="4dp"-->
-    <!--android:text="@string/sendButton" />-->
+    <!--<Button--><!--android:id="@+id/btn_sendRequest"--><!--android:layout_width="match_parent"--><!--android:layout_height="48dp"--><!--android:background="#80000000"--><!--android:orientation="horizontal"--><!--android:padding="4dp"--><!--android:text="@string/sendButton" />-->
 
 
 </LinearLayout>
