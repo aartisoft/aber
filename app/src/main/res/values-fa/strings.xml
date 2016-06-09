@@ -100,4 +100,5 @@
     <string name="title_fab_notify_arrived">اعلان رسیدن به محل</string>
     <string name="title_fab_start_trip">آغاز سفر</string>
     <string name="title_fab_end_trip">پایان سفر</string>
+    <string name="titile_fab_edit_price">تغییر هزینه</string>
 </resources>

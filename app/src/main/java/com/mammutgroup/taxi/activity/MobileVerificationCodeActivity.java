@@ -3,8 +3,10 @@ package com.mammutgroup.taxi.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +27,10 @@ import retrofit.client.Response;
 public class MobileVerificationCodeActivity extends AppCompatActivity {
 
     public static final int MOBILE_ACTIVATED = 200;
+    private final String TAG = MobileVerificationCodeActivity.class.getName();
 
-    private int timerValue = 60;
-
+    private final long MAX_TIME = 60000;
+    private long startTime;
 
     @Bind(R.id.input_verification_code)
     EditText inputVerificationCode;
@@ -38,11 +41,13 @@ public class MobileVerificationCodeActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            txtTimer.setText(String.format("%02d s", timerValue));
-            if (timerValue == 0)
+            long millis = MAX_TIME - (System.currentTimeMillis() - startTime);
+            int seconds = (int) (millis / 1000);
+            Log.d(TAG,"Timer tick");
+            if (seconds <= 0)
                 codeExpired();
             else {
-                timerValue--;
+                txtTimer.setText(String.format("%02d s", seconds));
                 timerHandler.postDelayed(this, 1000);
             }
         }
@@ -54,7 +59,9 @@ public class MobileVerificationCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mobile_verification_code);
         ButterKnife.bind(this);
         setupToolbar();
-        restartTimer();
+        startTime = System.currentTimeMillis();
+        txtTimer.setClickable(false);
+        Log.d(TAG,"onCreate called.");
     }
 
     @Override
@@ -65,8 +72,14 @@ public class MobileVerificationCodeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStart() {
+        super.onStart();
+        timerHandler.postDelayed(timerRunnable, 0);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         timerHandler.removeCallbacks(timerRunnable);
     }
 
@@ -147,7 +160,7 @@ public class MobileVerificationCodeActivity extends AppCompatActivity {
     }
 
     private void restartTimer() {
-        timerValue = 60;
+        startTime = System.currentTimeMillis();
         txtTimer.setClickable(false);
         timerHandler.postDelayed(timerRunnable, 0);
     }

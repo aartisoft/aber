@@ -85,10 +85,10 @@
     </string-array>
 
     <string name="x_selected">%1$d selected</string>
-    <string name="title_fab_cancel_trip">Cancel Trip</string>
-    <string name="title_fab_notify_arrived">Arrived Notification</string>
-    <string name="title_fab_start_trip">Start Trip</string>
-    <string name="title_fab_end_trip">End Trip</string>
-
+    <string name="title_fab_cancel_trip">Cancel trip</string>
+    <string name="title_fab_notify_arrived">Arrived notification</string>
+    <string name="title_fab_start_trip">Start trip</string>
+    <string name="title_fab_end_trip">End trip</string>
+    <string name="titile_fab_edit_price">Edit Price</string>
 
 </resources>
