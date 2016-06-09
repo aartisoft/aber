@@ -10,6 +10,10 @@ public class MobileNumberUtil {
 
     public static void validate(String number) throws InvalidMobileNumberException
     {
-        //todo implement
+        if(number.startsWith("0"))
+            validate(number.substring(1));
+        else if(number.length() != 10)
+            throw new InvalidMobileNumberException();
+
     }
 }
