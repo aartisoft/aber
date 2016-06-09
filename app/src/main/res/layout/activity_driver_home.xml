@@ -93,7 +93,7 @@
                     fab:fab_title="@string/title_fab_end_trip"
                     />
                 <com.getbase.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/edit_price"
+                        android:id="@+id/fab_edit_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         fab:fab_colorNormal="@color/keppel"
@@ -102,11 +102,6 @@
                 />
 
             </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-
-
-
-
         </fragment>
 
     </FrameLayout>
