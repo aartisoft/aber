@@ -106,4 +106,5 @@
     <string name="txt_label_trip_distance">Distance:</string>
     <string name="txt_label_trip_approximate_time">approximate time:</string>
     <string name="double_press_back">Please click BACK again to exit</string>
+    <string name="driver">driver</string>
 </resources>

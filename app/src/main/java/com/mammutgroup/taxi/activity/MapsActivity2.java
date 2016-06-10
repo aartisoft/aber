@@ -54,6 +54,7 @@ import com.mammutgroup.taxi.TaxiApplication;
 import com.mammutgroup.taxi.model.TaxiItem;
 import com.mammutgroup.taxi.service.remote.rest.api.order.model.Order;
 import com.mammutgroup.taxi.service.remote.rest.api.order.model.PriceResponse;
+import com.mammutgroup.taxi.service.remote.rest.api.vehicle.model.TaxiLatLng;
 import com.mammutgroup.taxi.service.remote.rest.api.vehicle.model.Vehicle;
 import com.mammutgroup.taxi.util.DirectionsJSONParser;
 import com.mikepenz.materialdrawer.Drawer;
@@ -131,8 +132,8 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         return R.layout.passenger_home;
     }
 
-    Handler timerHandler = new Handler();
-    Runnable timerRunnable = new Runnable() {
+    Handler testTimerHandler = new Handler();
+    Runnable testTimerRunnable = new Runnable() {
 
         @Override
         public void run() {
@@ -159,7 +160,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                     @Override
                     public void success(Order order, Response response) {
                         Toast.makeText(getApplicationContext(), R.string.OrderRequestSent, Toast.LENGTH_LONG).show();
-                        timerHandler.postDelayed(timerRunnable, 5000);
+                        testTimerHandler.postDelayed(testTimerRunnable, 5000);
                     }
 
                     @Override
@@ -170,15 +171,48 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         );
     }
 
+    Marker driverMarker;
+    Handler driverLocationTimerHandler = new Handler();
+    Runnable driverLocationTimerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            TaxiApplication.restClient().vehicleService().taxiLastLocation(taxiId
+                    , new Callback<TaxiLatLng>() {
+                        @Override
+                        public void success(TaxiLatLng order, Response response) {
+                            LatLng latLng = new LatLng(order.getLat(), order.getLng());
+                            if (driverMarker == null) {
+                                MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.taxi))
+                                        .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_destination_marker)).
+                                                snippet(getString(R.string.driver));
+                                driverMarker = map.addMarker(markerOption);
+                            } else
+                                driverMarker.setPosition(latLng);
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+
+                        }
+                    }
+            );
+            driverLocationTimerHandler.postDelayed(this, 5000);
+        }
+    };
+
+    String taxiId;
+
     //TODO call this from push listener
     public void carSent(Vehicle vehicle, int approximateArriveTime) {
-
         String message;
-        message = String.format( getString(R.string.driver_sent_message),
+        message = String.format(getString(R.string.driver_sent_message),
                 vehicle.getBrand(), vehicle.getPlateNumber(), approximateArriveTime);
 
-        TaxiInfoDialogBox cdd=new TaxiInfoDialogBox(this, message);
+        taxiId = vehicle.getId();
+
+        TaxiInfoDialogBox cdd = new TaxiInfoDialogBox(this, message);
         cdd.show();
+        driverLocationTimerHandler.postDelayed(driverLocationTimerRunnable, 1000);
 
     }
 

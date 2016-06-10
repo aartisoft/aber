@@ -96,5 +96,6 @@
     <string name="txt_label_trip_approximate_time">approximate time:</string>
     <string name="double_press_back">Please click BACK again to exit</string>
     <string name="driver_sent_message">A %1$s with plate number %2$s has been sent to you. It will arrive in about %3$d minutes.</string>
+    <string name="driver">driver</string>
 
 </resources>
