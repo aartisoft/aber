@@ -73,6 +73,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -92,7 +93,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     private Marker sourceMarker;
     private Marker destinationMarker;
     private GoogleApiClient googleApiClient;
-    private HashMap<LatLng, Marker> allTaxisLatLng = new HashMap<>();
+    //    private HashMap<LatLng, Marker> allTaxisLatLng = new HashMap<>();
     private Polyline polyline;
     private ClusterManager<TaxiItem> mClusterManager;
     private LatLngBounds mapBounds;
@@ -117,6 +118,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     TextView approximateTimeTextView;
     @Bind(R.id.googlemaps_distance_text)
     TextView distanceTextView;
+    private boolean taxiAccepted = false;
 
     private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
         @Override
@@ -204,6 +206,11 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
 
     //TODO call this from push listener
     public void carSent(Vehicle vehicle, int approximateArriveTime) {
+        taxiAccepted = true;
+        Collection<Marker> markers = mClusterManager.getMarkerCollection().getMarkers();
+        for (Marker marker : markers) {
+            marker.remove();
+        }
         String message;
         message = String.format(getString(R.string.driver_sent_message),
                 vehicle.getBrand(), vehicle.getPlateNumber(), approximateArriveTime);
@@ -212,6 +219,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
 
         TaxiInfoDialogBox cdd = new TaxiInfoDialogBox(this, message);
         cdd.show();
+
         driverLocationTimerHandler.postDelayed(driverLocationTimerRunnable, 1000);
 
     }
@@ -352,8 +360,10 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition position) {
-                mapBounds = map.getProjection().getVisibleRegion().latLngBounds;
-                markNearbyTaxi();
+                if (!taxiAccepted) {
+                    mapBounds = map.getProjection().getVisibleRegion().latLngBounds;
+                    markNearbyTaxi();
+                }
             }
         });
         if (googleApiClient == null) {
@@ -434,10 +444,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         double lngBound = neLng - swLng;
         int taxiCount = random.nextInt(6) + 1;
         List<TaxiItem> latLngs = new ArrayList<>();
-        for (LatLng latLng : allTaxisLatLng.keySet()) {
-//            if (latLng.latitude < neLat && latLng.latitude > swLat && latLng.longitude < neLng && latLng.longitude > swLng)
-            latLngs.add(new TaxiItem(latLng, R.drawable.taxi_icon));
-        }
         for (int i = 0; i < taxiCount; i++) {
             Random r = new Random();
             double lng = swLng + (lngBound) * r.nextDouble();
