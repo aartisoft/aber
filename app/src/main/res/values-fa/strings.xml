@@ -82,11 +82,11 @@
         تاکسی
     </string>
     <string name="title_edit_profile">Edit Profile</string>
-    <string name="txt_label_family">your family</string>
-    <string name="sex_prompt">Choose your sex</string>
+    <string name="txt_label_family">نام خانوادگی</string>
+    <string name="sex_prompt">جنسیت خود را انتخاب کنید</string>
     <string name="txt_btn_save">save</string>
-    <string name="profile_successfully_saved">your profile successfully saved</string>
-    <string name="invalid_email_address">invalid email address</string>
+    <string name="profile_successfully_saved">پروفایل شما با موفقیت ذخیره شد</string>
+    <string name="invalid_email_address">آدرس ایمیل اشتباه است</string>
 
     <string-array name="sex_arrays">
         <item>Male</item>
@@ -94,15 +94,16 @@
     </string-array>
     <string name="x_selected">%1$d انتخاب شده</string>
 
-    <string name="message_dialog_cannot_be_outof_service">You can not be out of service for now!</string>
+    <string name="message_dialog_cannot_be_outof_service">شما نمیتوانید اکنون خارج از سرویس باشید!</string>
 
     <string name="title_fab_cancel_trip">کنسل کردن سفر</string>
     <string name="title_fab_notify_arrived">اعلان رسیدن به محل</string>
     <string name="title_fab_start_trip">آغاز سفر</string>
     <string name="title_fab_end_trip">پایان سفر</string>
-    <string name="txt_label_source">Source</string>
-    <string name="txt_label_trip_price">Price:</string>
-    <string name="txt_label_trip_distance">Distance:</string>
-    <string name="txt_label_trip_approximate_time">approximate time:</string>
-    <string name="double_press_back">Please click BACK again to exit</string>
+    <string name="txt_label_source">مبدا</string>
+    <string name="txt_label_trip_price">قیمت :</string>
+    <string name="txt_label_trip_distance">فاصله :</string>
+    <string name="txt_label_trip_approximate_time">زمان حدودی :</string>
+    <string name="double_press_back">لطفا دوباره دکمه بازگشت را جهت خروج فشار دهید</string>
+    <string name="driver_sent_message">ماشین %1$s باشماره پلاک %2$s برای شما ارسال شد. حدود %3$d دقیقه دیگر میرسد.</string>
 </resources>

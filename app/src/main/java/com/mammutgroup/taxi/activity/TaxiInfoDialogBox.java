@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Iraj on 6/9/2016.
@@ -13,14 +17,17 @@ import android.widget.Button;
 public class TaxiInfoDialogBox extends Dialog implements
         android.view.View.OnClickListener {
 
-    public Activity c;
-    public Dialog d;
-    public Button yes, no;
+    @Bind(R.id.taxi_info_dialog_txt)
+    public TextView taxiInfoTxt;
+    @Bind(R.id.taxi_info_dialog_btn_yes)
+    public Button yes;
+    @Bind(R.id.taxi_info_dialog_btn_no)
+    public Button no;
+    String message;
 
-    public TaxiInfoDialogBox(Activity a) {
+    public TaxiInfoDialogBox(Activity a, String message) {
         super(a);
-        // TODO Auto-generated constructor stub
-        this.c = a;
+        this.message = message;
     }
 
     @Override
@@ -28,20 +35,20 @@ public class TaxiInfoDialogBox extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.taxi_detail_for_passenger);
-        yes = (Button) findViewById(R.id.btn_yes);
-        no = (Button) findViewById(R.id.btn_no);
+        ButterKnife.bind(this);
         yes.setOnClickListener(this);
         no.setOnClickListener(this);
+        taxiInfoTxt.setText(message);
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_yes:
-                c.finish();
+            case R.id.taxi_info_dialog_btn_yes:
+                dismiss();
                 break;
-            case R.id.btn_no:
+            case R.id.taxi_info_dialog_btn_no:
                 dismiss();
                 break;
             default:

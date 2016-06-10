@@ -54,6 +54,7 @@ import com.mammutgroup.taxi.TaxiApplication;
 import com.mammutgroup.taxi.model.TaxiItem;
 import com.mammutgroup.taxi.service.remote.rest.api.order.model.Order;
 import com.mammutgroup.taxi.service.remote.rest.api.order.model.PriceResponse;
+import com.mammutgroup.taxi.service.remote.rest.api.vehicle.model.Vehicle;
 import com.mammutgroup.taxi.util.DirectionsJSONParser;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -130,6 +131,18 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         return R.layout.passenger_home;
     }
 
+    Handler timerHandler = new Handler();
+    Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            Vehicle vehicle = new Vehicle();
+            vehicle.setBrand("Peugeot 206");
+            vehicle.setPlateNumber("12IR331245");
+            carSent(vehicle, 14);
+        }
+    };
+
     @OnClick(R.id.googlemaps_send_request)
     void sendOrderRequest() {
         if (sourceMarker == null || destinationMarker == null)
@@ -146,6 +159,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                     @Override
                     public void success(Order order, Response response) {
                         Toast.makeText(getApplicationContext(), R.string.OrderRequestSent, Toast.LENGTH_LONG).show();
+                        timerHandler.postDelayed(timerRunnable, 5000);
                     }
 
                     @Override
@@ -154,6 +168,18 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                     }
                 }
         );
+    }
+
+    //TODO call this from push listener
+    public void carSent(Vehicle vehicle, int approximateArriveTime) {
+
+        String message;
+        message = String.format( getString(R.string.driver_sent_message),
+                vehicle.getBrand(), vehicle.getPlateNumber(), approximateArriveTime);
+
+        TaxiInfoDialogBox cdd=new TaxiInfoDialogBox(this, message);
+        cdd.show();
+
     }
 
     private void sendPriceRequest() {
@@ -235,7 +261,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     public void onBackPressed() {
         if (bottomLayout.getVisibility() == View.VISIBLE) {
             bottomLayout.setVisibility(View.GONE);
-        } else{
+        } else {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
                 return;
@@ -248,7 +274,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
 
                 @Override
                 public void run() {
-                    doubleBackToExitPressedOnce=false;
+                    doubleBackToExitPressedOnce = false;
                 }
             }, 2000);
         }
