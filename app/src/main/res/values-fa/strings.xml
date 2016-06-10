@@ -100,10 +100,10 @@
     <string name="title_fab_notify_arrived">اعلان رسیدن به محل</string>
     <string name="title_fab_start_trip">آغاز سفر</string>
     <string name="title_fab_end_trip">پایان سفر</string>
-    <string name="txt_label_source">مبدا</string>
-    <string name="txt_label_trip_price">قیمت :</string>
-    <string name="txt_label_trip_distance">فاصله :</string>
-    <string name="txt_label_trip_approximate_time">زمان حدودی :</string>
-    <string name="double_press_back">لطفا دوباره دکمه بازگشت را جهت خروج فشار دهید</string>
-    <string name="driver_sent_message">ماشین %1$s باشماره پلاک %2$s برای شما ارسال شد. حدود %3$d دقیقه دیگر میرسد.</string>
+    <string name="title_fab_edit_price">تغییر هزینه</string>
+    <string name="txt_label_source">Source</string>
+    <string name="txt_label_trip_price">Price:</string>
+    <string name="txt_label_trip_distance">Distance:</string>
+    <string name="txt_label_trip_approximate_time">approximate time:</string>
+    <string name="double_press_back">Please click BACK again to exit</string>
 </resources>

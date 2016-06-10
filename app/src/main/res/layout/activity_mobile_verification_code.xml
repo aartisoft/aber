@@ -11,6 +11,7 @@
     <android.support.design.widget.TextInputLayout
             style="@style/width_match_parent_max_600"
             android:layout_height="wrap_content"
+            android:layoutDirection="ltr"
             android:layout_marginTop="20dp"
             android:descendantFocusability="beforeDescendants"
             android:focusableInTouchMode="true"
@@ -24,12 +25,12 @@
                 android:layout_marginBottom="5dp"
                 android:inputType="numberDecimal"
                 android:ellipsize="start"
+                android:textDirection="ltr"
         />
         <TextView
                 android:id="@+id/txt_timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_gravity="center"/>
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>

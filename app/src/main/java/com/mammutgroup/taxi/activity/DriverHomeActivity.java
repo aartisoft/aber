@@ -67,8 +67,11 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
     FloatingActionButton fabStartTrip;
     @Bind(R.id.fab_end_trip)
     FloatingActionButton fabEndTrip;
+    @Bind(R.id.fab_edit_price)
+    FloatingActionButton fabEditPrice;
     @Bind(R.id.multiple_actions)
     FloatingActionsMenu floatingActionsMenu;
+
 
     private ServiceConnection locationServiceConnection = new ServiceConnection() {
         @Override
@@ -134,6 +137,8 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
 //                break;
 //        }
 //    }
+
+
 
     private void populateMapOnTheRoadToPassenger()
     {
@@ -546,6 +551,7 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
         fabStartTrip.setVisibility(View.VISIBLE);
         fabArrivedNotification.setVisibility(View.VISIBLE);
         fabCancelTrip.setVisibility(View.VISIBLE);
+        fabEditPrice.setVisibility(View.GONE);
     }
 
     private void populateFabOutOfService()
@@ -565,6 +571,7 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
         fabStartTrip.setVisibility(View.GONE);
         fabArrivedNotification.setVisibility(View.GONE);
         fabCancelTrip.setVisibility(View.GONE);
+        fabEditPrice.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.fab_end_trip)
@@ -587,6 +594,11 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
 
     @OnClick(R.id.fab_cancel_trip)
     void cancelTrip()
+    {
+
+    }
+    @OnClick(R.id.fab_edit_price)
+    void editPrice()
     {
 
     }
