@@ -17,6 +17,11 @@ import retrofit.http.Body;
 public class MockOrderService implements OrderService {
     @Override
     public void createOrder(Order order, Callback<Order> callback) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         order.setId(UUID.randomUUID().toString());
         callback.success(order, null);
     }

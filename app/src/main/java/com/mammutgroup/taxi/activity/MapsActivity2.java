@@ -54,6 +54,8 @@ import com.mammutgroup.taxi.TaxiApplication;
 import com.mammutgroup.taxi.model.TaxiItem;
 import com.mammutgroup.taxi.service.remote.rest.api.order.model.Order;
 import com.mammutgroup.taxi.service.remote.rest.api.order.model.PriceResponse;
+import com.mammutgroup.taxi.service.remote.rest.api.vehicle.model.TaxiLatLng;
+import com.mammutgroup.taxi.service.remote.rest.api.vehicle.model.Vehicle;
 import com.mammutgroup.taxi.util.DirectionsJSONParser;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -71,6 +73,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -90,7 +93,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     private Marker sourceMarker;
     private Marker destinationMarker;
     private GoogleApiClient googleApiClient;
-    private HashMap<LatLng, Marker> allTaxisLatLng = new HashMap<>();
+    //    private HashMap<LatLng, Marker> allTaxisLatLng = new HashMap<>();
     private Polyline polyline;
     private ClusterManager<TaxiItem> mClusterManager;
     private LatLngBounds mapBounds;
@@ -115,6 +118,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     TextView approximateTimeTextView;
     @Bind(R.id.googlemaps_distance_text)
     TextView distanceTextView;
+    private boolean taxiAccepted = false;
 
     private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
         @Override
@@ -129,6 +133,18 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     protected int getLayoutResourceId() {
         return R.layout.passenger_home;
     }
+
+    Handler testTimerHandler = new Handler();
+    Runnable testTimerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            Vehicle vehicle = new Vehicle();
+            vehicle.setBrand("Peugeot 206");
+            vehicle.setPlateNumber("12IR331245");
+            carSent(vehicle, 14);
+        }
+    };
 
     @OnClick(R.id.googlemaps_send_request)
     void sendOrderRequest() {
@@ -146,6 +162,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                     @Override
                     public void success(Order order, Response response) {
                         Toast.makeText(getApplicationContext(), R.string.OrderRequestSent, Toast.LENGTH_LONG).show();
+                        testTimerHandler.postDelayed(testTimerRunnable, 5000);
                     }
 
                     @Override
@@ -154,6 +171,57 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
                     }
                 }
         );
+    }
+
+    Marker driverMarker;
+    Handler driverLocationTimerHandler = new Handler();
+    Runnable driverLocationTimerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            TaxiApplication.restClient().vehicleService().taxiLastLocation(taxiId
+                    , new Callback<TaxiLatLng>() {
+                        @Override
+                        public void success(TaxiLatLng order, Response response) {
+                            LatLng latLng = new LatLng(order.getLat(), order.getLng());
+                            if (driverMarker == null) {
+                                MarkerOptions markerOption = new MarkerOptions().position(latLng).title(getString(R.string.taxi))
+                                        .draggable(true).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_destination_marker)).
+                                                snippet(getString(R.string.driver));
+                                driverMarker = map.addMarker(markerOption);
+                            } else
+                                driverMarker.setPosition(latLng);
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+
+                        }
+                    }
+            );
+            driverLocationTimerHandler.postDelayed(this, 5000);
+        }
+    };
+
+    String taxiId;
+
+    //TODO call this from push listener
+    public void carSent(Vehicle vehicle, int approximateArriveTime) {
+        taxiAccepted = true;
+        Collection<Marker> markers = mClusterManager.getMarkerCollection().getMarkers();
+        for (Marker marker : markers) {
+            marker.remove();
+        }
+        String message;
+        message = String.format(getString(R.string.driver_sent_message),
+                vehicle.getBrand(), vehicle.getPlateNumber(), approximateArriveTime);
+
+        taxiId = vehicle.getId();
+
+        TaxiInfoDialogBox cdd = new TaxiInfoDialogBox(this, message);
+        cdd.show();
+
+        driverLocationTimerHandler.postDelayed(driverLocationTimerRunnable, 1000);
+
     }
 
     private void sendPriceRequest() {
@@ -235,7 +303,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
     public void onBackPressed() {
         if (bottomLayout.getVisibility() == View.VISIBLE) {
             bottomLayout.setVisibility(View.GONE);
-        } else{
+        } else {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
                 return;
@@ -248,7 +316,7 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
 
                 @Override
                 public void run() {
-                    doubleBackToExitPressedOnce=false;
+                    doubleBackToExitPressedOnce = false;
                 }
             }, 2000);
         }
@@ -292,8 +360,10 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition position) {
-                mapBounds = map.getProjection().getVisibleRegion().latLngBounds;
-                markNearbyTaxi();
+                if (!taxiAccepted) {
+                    mapBounds = map.getProjection().getVisibleRegion().latLngBounds;
+                    markNearbyTaxi();
+                }
             }
         });
         if (googleApiClient == null) {
@@ -374,10 +444,6 @@ public class MapsActivity2 extends AbstractHomeActivity implements LocationListe
         double lngBound = neLng - swLng;
         int taxiCount = random.nextInt(6) + 1;
         List<TaxiItem> latLngs = new ArrayList<>();
-        for (LatLng latLng : allTaxisLatLng.keySet()) {
-//            if (latLng.latitude < neLat && latLng.latitude > swLat && latLng.longitude < neLng && latLng.longitude > swLng)
-            latLngs.add(new TaxiItem(latLng, R.drawable.taxi_icon));
-        }
         for (int i = 0; i < taxiCount; i++) {
             Random r = new Random();
             double lng = swLng + (lngBound) * r.nextDouble();
