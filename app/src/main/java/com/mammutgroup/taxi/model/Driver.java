@@ -11,17 +11,8 @@ import com.mammutgroup.taxi.service.remote.rest.api.user.model.User;
 public class Driver extends User {
 
     private BasicLocation location;
-    private volatile boolean readyForService;
     private DriverStatus status;
     private Order currentOrder;
-
-    public boolean isReadyForService() {
-        return readyForService;
-    }
-
-    public void setReadyForService(boolean readyForService) {
-        this.readyForService = readyForService;
-    }
 
     public Order getCurrentOrder() {
         return currentOrder;

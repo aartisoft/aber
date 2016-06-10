@@ -49,4 +49,7 @@ dependencies {
 //    compile 'com.getbase:floatingactionbutton:1.10.1'
 
     compile project(':fab-lib')
+    compile 'com.pushwoosh:pushwoosh:4.1.6'
+//    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+
 }

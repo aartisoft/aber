@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         fab:fab_colorNormal="@color/keppel"
                         fab:fab_colorPressed="@color/white_pressed"
-                        fab:fab_title="@string/title_fab_end_trip"
+                        fab:fab_title="@string/title_fab_edit_price"
                 />
 
             </com.getbase.floatingactionbutton.FloatingActionsMenu>

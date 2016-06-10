@@ -34,6 +34,9 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.pushwoosh.BasePushMessageReceiver;
+import com.pushwoosh.BaseRegistrationReceiver;
+import com.pushwoosh.PushManager;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import permissions.dispatcher.NeedsPermission;
@@ -50,14 +53,14 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
     private final int ENABLE_GPS_REQUEST_CODE = 500;
     private final BasicLocation defaultMapZoomLocation = new BasicLocation(35.689197, 51.388974);// Tehran location
     private Driver driver;
-    //private GoogleMap map;
     private SwitchCompat statusSwitch;
     private LocationService locationService;
     private Marker driverMarker;
     private Marker passengerOriginMarker;
     private Marker passengerDestinationMarker;
-    private volatile boolean mapInitialized = false;
     private DriverStatus driverStatusLocal;
+    private PushManager pushManager;
+    private boolean statusSwitchedInCode = false;
 
     @Bind(R.id.fab_cancel_trip)
     FloatingActionButton fabCancelTrip;
@@ -103,6 +106,7 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
         ButterKnife.bind(this);
         driver = (Driver) UserConfig.getCurrentUser();
         driverStatusLocal = driver.getStatus();
+        //initPushwoosh();
         // init driver
         //driver = new Driver();
         //driver.setReadyForService(true);
@@ -233,54 +237,6 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
         });
     }
 
-
-
-    /**
-     * called after map component is ready.
-     */
-/*    private void initializeMap() {
-        Log.d(TAG, "Initializing map.");
-
-        LatLng zoomLatLng = new LatLng(defaultMapZoomLocation.getLatitude(), defaultMapZoomLocation.getLongitude());
-        if (driver.getLocation() != null) {
-            zoomLatLng = new LatLng(driver.getLocation().getLatitude(), driver.getLocation().getLongitude());
-        }
-        map.moveCamera(CameraUpdateFactory.newLatLng(zoomLatLng));
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(zoomLatLng, 12.0f), new GoogleMap.CancelableCallback() {
-
-            @Override
-            public void onFinish() {
-                updateDriverMarkerPosition();
-                mapInitialized = true;
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-        });
-    }
-
-    @Override
-    protected void setupToolbar() {
-        super.setupToolbar();
-        getSupportActionBar().setTitle(R.string.name_drawer_item_home);
-    }*/
-
-
-    //    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        System.out.println("VVVV:   " + item.getItemId());
-//        if (item.getItemId() == R.id.mit_switch_service_state) {
-//            menuSwitchServiceStateSelected(item);
-//            return true;
-//        }
-//
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -291,20 +247,19 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
         statusSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                changeDriverServiceState(b);
+                if(!statusSwitchedInCode) {
+                    changeDriverServiceState(b);
+                    statusSwitchedInCode = false;
+                }
             }
         });
         statusSwitch.setChecked(driver.getStatus() != DriverStatus.OUT_OF_SERVICE);
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void menuSwitchServiceStateSelected(MenuItem item) {
-        SwitchCompat switchCompat = (SwitchCompat) item.getActionView().findViewById(R.id.material_switch);
-    }
-
     @Override
     protected Drawer buildDrawer() {
-        return new DrawerBuilder()
+        Drawer drawer = new  DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withHasStableIds(true)
@@ -342,7 +297,8 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
                 })
                 .withShowDrawerOnFirstLaunch(false)
                 .build();
-
+        drawer.deselect();
+        return drawer;
 
     }
 
@@ -383,26 +339,33 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
         if (SmartLocation.with(this).location().state().isGpsAvailable()) {
             DriverHomeActivityPermissionsDispatcher.startLocationServiceWithCheck(this);
             safeBindLocationService();
-            //driver.setReadyForService(true);
             driver.setStatus(DriverStatus.READY_FOR_SERVICE);
-            //todo more
+            //pushManager.registerForPushNotifications();
 
-        } else {
-            statusSwitch.setChecked(false);
-        }
+        } else
+            setStatusSwitch(false);
+
     }
 
+    private void setStatusSwitch(boolean status)
+    {
+        statusSwitchedInCode = true;
+        statusSwitch.setChecked(status);
+    }
     private void makeDriverOutOfService()
     {
         if(driver.getStatus() != DriverStatus.READY_FOR_SERVICE)
         {
             // can not be out of service
            showCannotBeOutOfServiceDialog();
+           setStatusSwitch(true);
         }else
         {
             // stop service
             safeUnbindLocationService();
             stopLocationService();
+            //stop push notifications
+            //pushManager.unregisterForPushNotifications();
             // clean ui
             if(driverMarker != null) {
                 driverMarker.remove();
@@ -418,6 +381,7 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
     {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.message_dialog_cannot_be_outof_service);
+        alertDialogBuilder.setPositiveButton("OK",null);
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
@@ -578,12 +542,20 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
     void endTrip()
     {
 
+        //TODO api call
+        //on success
+        driver.setStatus(DriverStatus.READY_FOR_SERVICE);
+        updateView();
     }
 
     @OnClick(R.id.fab_start_trip)
     void startTrip()
     {
 
+        //TODO api call
+        //on success
+        driver.setStatus(DriverStatus.SERVICING_PASSENGER);
+        updateView();
     }
 
     @OnClick(R.id.fab_arrival_notify)
@@ -595,7 +567,10 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
     @OnClick(R.id.fab_cancel_trip)
     void cancelTrip()
     {
-
+        //TODO api call
+        //on success
+        driver.setStatus(DriverStatus.READY_FOR_SERVICE);
+        updateView();
     }
     @OnClick(R.id.fab_edit_price)
     void editPrice()
@@ -630,5 +605,101 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
                 break;
         }
     }
+
+    private void initPushwoosh() {
+
+        //registerReceivers();
+        pushManager = PushManager.getInstance(this);
+        //Start push manager, this will count app open for Pushwoosh stats as well
+        try
+        {
+            pushManager.onStartup(this);
+        }
+        catch (Exception e)
+        {
+            Log.e("Pushwoosh", e.getLocalizedMessage());
+        }
+
+    }
+/*
+    //Registration receiver
+    BroadcastReceiver mBroadcastReceiver = new BaseRegistrationReceiver()
+    {
+        @Override
+        public void onRegisterActionReceive(Context context, Intent intent)
+        {
+            checkMessage(intent);
+        }
+    };
+
+    //Push message receiver
+    private BroadcastReceiver mReceiver = new BasePushMessageReceiver()
+    {
+        @Override
+        protected void onMessageReceive(Intent intent)
+        {
+            //JSON_DATA_KEY contains JSON payload of push notification.
+            doOnMessageReceive(intent.getExtras().getString(JSON_DATA_KEY));
+        }
+    };
+    //Registration of the receivers
+    public void registerReceivers()
+    {
+        IntentFilter intentFilter = new IntentFilter(getPackageName() + ".action.PUSH_MESSAGE_RECEIVE");
+        registerReceiver(mReceiver, intentFilter, getPackageName() +".permission.C2D_MESSAGE", null);
+        registerReceiver(mBroadcastReceiver, new IntentFilter(getPackageName() + "." + PushManager.REGISTER_BROAD_CAST_ACTION));
+    }
+
+    *//**
+     * Will check PushWoosh extras in this intent, and fire actual method
+     *
+     * @param intent activity intent
+     *//*
+    private void checkMessage(Intent intent)
+    {
+        if (null != intent)
+        {
+            if (intent.hasExtra(PushManager.PUSH_RECEIVE_EVENT))
+            {
+                doOnMessageReceive(intent.getExtras().getString(PushManager.PUSH_RECEIVE_EVENT));
+            }
+
+
+            resetIntentValues();
+        }
+    }
+    private void resetIntentValues()
+    {
+        Intent mainAppIntent = getIntent();
+
+        if (mainAppIntent.hasExtra(PushManager.PUSH_RECEIVE_EVENT))
+        {
+            mainAppIntent.removeExtra(PushManager.PUSH_RECEIVE_EVENT);
+        }
+        else if (mainAppIntent.hasExtra(PushManager.REGISTER_EVENT))
+        {
+            mainAppIntent.removeExtra(PushManager.REGISTER_EVENT);
+        }
+        else if (mainAppIntent.hasExtra(PushManager.UNREGISTER_EVENT))
+        {
+            mainAppIntent.removeExtra(PushManager.UNREGISTER_EVENT);
+        }
+        else if (mainAppIntent.hasExtra(PushManager.REGISTER_ERROR_EVENT))
+        {
+            mainAppIntent.removeExtra(PushManager.REGISTER_ERROR_EVENT);
+        }
+        else if (mainAppIntent.hasExtra(PushManager.UNREGISTER_ERROR_EVENT))
+        {
+            mainAppIntent.removeExtra(PushManager.UNREGISTER_ERROR_EVENT);
+        }
+
+        setIntent(mainAppIntent);
+    }
+
+    public void doOnMessageReceive(String message)
+    {
+        Log.d(TAG,"Push MEssage: " + message);
+    }*/
+
 
 }

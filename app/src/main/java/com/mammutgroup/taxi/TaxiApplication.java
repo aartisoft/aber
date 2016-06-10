@@ -2,10 +2,13 @@ package com.mammutgroup.taxi;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.multidex.MultiDexApplication;
 import com.mammutgroup.taxi.config.UserConfig;
 import com.mammutgroup.taxi.service.remote.rest.TaxiRestClient;
 import com.mammutgroup.taxi.service.remote.rest.mock.MockTaxiRestClient;
+
+import java.util.Locale;
 
 /**
  * @author mushtu
@@ -24,6 +27,12 @@ public class TaxiApplication extends MultiDexApplication {
         super.onCreate();
         taxiRestClient = new MockTaxiRestClient();
         context = getApplicationContext();
+        /*Locale locale = new Locale("fa");
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());*/
     }
 
     public static void initApplication()
