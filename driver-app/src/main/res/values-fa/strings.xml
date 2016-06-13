@@ -1,0 +1,110 @@
+<resources>
+    <string name="app_name">عابر</string>
+
+    <!-- activity titles -->
+    <string name="title_activity_maps">نقشه</string>
+    <string name="title_activity_signup">ثبت نام</string>
+    <string name="title_activity_mobile_verification">شماره همراه شما</string>
+    <string name="title_activity_mobile_verification_code">تایید شماره موبایل</string>
+    <string name="title_activity_login">ورود به سیستم</string>
+    <string name="title_activity_maps2">نقشه</string>
+    <string name="title_activity_trip_requests">مسافرها</string>
+    <string name="title_activity_passenger_order_map">سفر</string>
+
+    <string name="title_toolbar_signup">ثبت نام</string>
+    <string name="title_toolbar_mobile_verification">شماره همراه شما</string>
+    <string name="title_toolbar_mobile_verification_code">تایید شماره موبایل</string>
+    <string name="title_menu_take_passenger">گرفتن مسافر</string>
+    <string name="title_menu_remove">حذف</string>
+    <string name="title_menu_refresh">به روز رسانی</string>
+
+    <string name="no_internet_connection">ریدی اینترنت نداری</string>
+    <string name="coud_not_load_map" />
+    <string name="dest">مقصد</string>
+    <string name="src">مبدا</string>
+    <string name="action_settings">تنظیمات</string>
+    <string name="hello_world">سلام جهان</string>
+    <string name="txt_btn_login">ورود</string>
+    <string name="txt_btn_signup">ثبت نام</string>
+    <string name="txt_label_username">نام کاربری</string>
+    <string name="txt_label_password">رمز عبور</string>
+    <string name="txt_label_email">آدرس ایمیل</string>
+    <string name="txt_label_user_name">نام شما</string>
+    <string name="txt_label_mobile_number">شماره همراه</string>
+    <string name="txt_btn_submit_mobile">تایید</string>
+    <string name="txt_btn_verify_code">تایید</string>
+
+    <string name="message_dialog_take_passenger_confirmation">درخواست شما ارسال خواهد شد.</string>
+    <string name="message_dialog_remove_order_from_list_confirmation">مطمءن هستید؟</string>
+    <string name="message_progress_signup">در حال ثبت نام...</string>
+    <string name="message_progress_login">در حال اجرا...</string>
+    <string name="message_progress_working">در حال درخواست...</string>
+    <string name="message_dialog_gps_not_available">جی پی اس دستگاه شما فعال نیست. برای اراپه سرویس نیاز به مکان شما داریم.</string>
+    <string name="txt_dialog_btn_enable_gps">رفتن به تنظیمات</string>
+    <string name="txt_dialog_btn_cancel_enable_gps">لغو</string>
+    <string name="txt_label_verification_code">کد</string>
+    <string name="txt_label_trip_origin">مبدا:</string>
+    <string name="txt_label_trip_destination">مقصد:</string>
+    <string name="txt_label_resend_code">ارسال مجدد</string>
+    <string name="name_drawer_item_home">خانه</string>
+    <string name="name_drawer_item_settings">تنظیمات</string>
+    <string name="name_drawer_item_logout">خروج</string>
+    <string name="name_drawer_section_account">حساب کاربری</string>
+    <string name="name_drawer_item_credit">اعتبار</string>
+    <string name="name_drawer_item_orders">درخواست های سفر</string>
+    <string name="sendButton">
+        ارسال
+    </string>
+    <string name="OrderRequestSent">
+        درخواست ارسال شد، لطفا کمی صبور باشید
+    </string>
+    <string name="MapTitle">
+        نقشه تهران
+    </string>
+    <string name="GPS_Connected">
+        متصل شد
+    </string>
+    <string name="request_gps">
+        مکان یاب غیر فعال است، آیا میخواهید آنرا فعال کنید؟
+    </string>
+    <string name="enable_gps_msg">
+        برای فعال کردن مکان یاب به تنظیمات بروید
+    </string>
+    <string name="cancel">
+        انصراف
+    </string>
+    <string name="connecting_gps">در حال اتصال به مکان یاب</string>
+    <string name="suspended">معلق</string>
+    <string name="download_exception">
+        خطا در حال دانلود
+    </string>
+    <string name="taxi">
+        تاکسی
+    </string>
+    <string name="title_edit_profile">Edit Profile</string>
+    <string name="txt_label_family">نام خانوادگی</string>
+    <string name="sex_prompt">جنسیت خود را انتخاب کنید</string>
+    <string name="txt_btn_save">save</string>
+    <string name="profile_successfully_saved">پروفایل شما با موفقیت ذخیره شد</string>
+    <string name="invalid_email_address">آدرس ایمیل اشتباه است</string>
+
+    <string-array name="sex_arrays">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string name="x_selected">%1$d انتخاب شده</string>
+
+    <string name="message_dialog_cannot_be_outof_service">شما نمیتوانید اکنون خارج از سرویس باشید!</string>
+
+    <string name="title_fab_cancel_trip">کنسل کردن سفر</string>
+    <string name="title_fab_notify_arrived">اعلان رسیدن به محل</string>
+    <string name="title_fab_start_trip">آغاز سفر</string>
+    <string name="title_fab_end_trip">پایان سفر</string>
+    <string name="title_fab_edit_price">تغییر هزینه</string>
+    <string name="txt_label_source">Source</string>
+    <string name="txt_label_trip_price">Price:</string>
+    <string name="txt_label_trip_distance">Distance:</string>
+    <string name="txt_label_trip_approximate_time">approximate time:</string>
+    <string name="double_press_back">Please click BACK again to exit</string>
+    <string name="driver">driver</string>
+</resources>

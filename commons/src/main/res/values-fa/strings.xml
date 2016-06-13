@@ -1,0 +1,24 @@
+<resources>
+    <!-- activity titles -->
+    <string name="title_activity_mobile_verification_code">تایید شماره موبایل</string>
+    <string name="title_activity_login">ورود به سیستم</string>
+
+    <string name="txt_btn_login">ورود</string>
+    <string name="txt_label_mobile_number">شماره همراه</string>
+    <string name="txt_label_verification_code">کد</string>
+    <string name="txt_btn_submit_mobile">تایید</string>
+    <string name="txt_btn_verify_code">تایید</string>
+    <string name="txt_label_resend_code">ارسال مجدد</string>
+
+    <string name="message_progress_login">در حال اجرا...</string>
+    <string name="message_progress_working">در حال درخواست...</string>
+
+    <string name="name_drawer_item_home">خانه</string>
+    <string name="name_drawer_item_settings">تنظیمات</string>
+    <string name="name_drawer_item_logout">خروج</string>
+    <string name="name_drawer_section_account">حساب کاربری</string>
+    <string name="name_drawer_item_credit">اعتبار</string>
+    <string name="name_drawer_item_orders">درخواست های سفر</string>
+
+    <string name="txt_label_iran_code">+98</string>
+</resources>

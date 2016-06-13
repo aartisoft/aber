@@ -1,0 +1,44 @@
+<resources>
+
+    <style name="AppTheme_parent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="list_selector">@drawable/list_ripple_selector</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--<style name="AppTheme.Dark" parent="AppTheme_parent">-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+
+        <!--<item name="android:windowBackground">@color/colorPrimary</item>-->
+
+        <!--<item name="colorControlNormal">@color/iron</item>-->
+        <!--<item name="colorControlActivated">@color/white</item>-->
+        <!--<item name="colorControlHighlight">@color/white</item>-->
+        <!--<item name="android:textColorHint">@color/iron</item>-->
+
+        <!--<item name="colorButtonNormal">@color/colorPrimaryDarker</item>-->
+    <!--</style>-->
+
+    <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/iron</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="MaterialAnimations.TextAppearance.Title" parent="android:TextAppearance.Material.Title">
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="MaterialAnimations.TextAppearance.Title.Inverse" parent="android:TextAppearance.Material.Title">
+        <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    </style>
+
+</resources>

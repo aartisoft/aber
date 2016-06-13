@@ -34,3 +34,16 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+ext {
+    compileSdkVersion = 23
+    buildToolsVersion = "23.0.3"
+    minSdkVersion = 15
+    targetSdkVersion = 23
+    versionCode = 1
+    versionName = "1.0.0-SANPSHOT"
+    playServicesVersion = "8.4.0"
+    supportLibVersion = "23.3.0"
+    retrofitVersion = "1.9.0"
+    butterknifeVersion = "7.0.1"
+    pushwooshVersion = "4.1.6"
+}

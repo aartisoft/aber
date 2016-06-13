@@ -1,2 +1,4 @@
-include ':app'
+include ':commons'
 include ':fab-lib'
+include ':driver-app'
+include ':app'

@@ -1,0 +1,21 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=50:21:9A:13:50:D8:71:B7:33:77:C4:C1:25:51:DC:CB:68:D1:76:6C%3Bcom.mamut.taxi.myapplication
+
+    You can also add your credentials to an existing key, using this line:
+    50:21:9A:13:50:D8:71:B7:33:77:C4:C1:25:51:DC:CB:68:D1:76:6C;com.mamut.taxi.myapplication
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyBvv8DDHTXeIKhZIGyo3A4uN9wtgC9RJ9w
+    </string>
+</resources>

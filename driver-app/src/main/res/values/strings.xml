@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">ABER</string>
+
+
+    <!-- activity titles -->
+    <string name="title_activity_mobile_verification_code">Phone verification</string>
+    <string name="title_activity_mobile_verification">Your phone</string>
+    <string name="title_activity_signup">Signing up</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_maps2">Map</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_trip_requests">Passengers</string>
+    <string name="title_activity_passenger_order_map">Trip</string>
+
+    <string name="title_toolbar_mobile_verification_code">Phone verification</string>
+    <string name="title_toolbar_mobile_verification">Your phone</string>
+    <string name="title_toolbar_signup">Signing up</string>
+
+    <string name="title_menu_take_passenger">Take Passenger</string>
+    <string name="title_menu_remove">Remove</string>
+    <string name="title_menu_refresh">Refresh</string>
+
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="coud_not_load_map" />
+    <string name="dest">Destination</string>
+    <string name="src">Origin</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="txt_btn_login">Login</string>
+    <string name="txt_btn_signup">Sign Up</string>
+    <string name="txt_label_username">Username</string>
+    <string name="txt_label_password">Password</string>
+    <string name="txt_label_email">Email</string>
+    <string name="txt_label_user_name">Your Name</string>
+    <string name="txt_label_mobile_number">Mobile Number</string>
+    <string name="txt_btn_submit_mobile">Confirm</string>
+    <string name="txt_btn_verify_code">Verify</string>
+    <string name="txt_label_verification_code">Code</string>
+    <string name="txt_label_trip_origin">Origin:</string>
+    <string name="txt_label_trip_destination">Destination:</string>
+    <string name="txt_label_resend_code">resend code!</string>
+
+
+    <string name="hello_world">Hello world!</string>
+    <string name="message_dialog_take_passenger_confirmation">We will send your response to passenger.</string>
+    <string name="message_dialog_remove_order_from_list_confirmation">Are you sure?</string>
+    <string name="message_dialog_cannot_be_outof_service">You can not get out of service for now!</string>
+
+
+    <string name="message_progress_signup">Signing up...</string>
+    <string name="message_progress_login">Signing in...</string>
+    <string name="message_dialog_gps_not_available">GPS is disabled in your device. We need your location to provide the services.</string>
+    <string name="txt_dialog_btn_enable_gps">Go to settings</string>
+    <string name="txt_dialog_btn_cancel_enable_gps">Cancel</string>
+    <string name="message_progress_working">In progress...</string>
+
+    <string name="name_drawer_item_home">Home</string>
+    <string name="name_drawer_item_settings">Settings</string>
+    <string name="name_drawer_item_logout">Logout</string>
+    <string name="name_drawer_section_account">Account</string>
+    <string name="name_drawer_item_credit">Credit</string>
+    <string name="name_drawer_item_orders">Orders</string>
+
+    <string name="sendButton">Send</string>
+    <string name="OrderRequestSent">Request send to server, please be patient</string>
+    <string name="MapTitle">map title</string>
+    <string name="GPS_Connected">Connected</string>
+    <string name="request_gps">GPS is disabled in your device. Would you like to enable it?</string>
+    <string name="enable_gps_msg">Goto Settings Page To Enable GPS</string>
+    <string name="cancel">Cancel</string>
+    <string name="connecting_gps">Connecting to GPS</string>
+    <string name="suspended">Suspended</string>
+    <string name="download_exception">Exception while downl</string>
+    <string name="taxi">TAXI</string>
+    <string name="title_edit_profile">Edit Profile</string>
+    <string name="txt_label_family">your family</string>
+    <string name="sex_prompt">Choose your sex</string>
+    <string name="txt_btn_save">save</string>
+    <string name="profile_successfully_saved">your profile successfully saved</string>
+    <string name="invalid_email_address">invalid email address</string>
+
+    <string-array name="sex_arrays">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string name="x_selected">%1$d selected</string>
+    <string name="title_fab_cancel_trip">Cancel trip</string>
+    <string name="title_fab_notify_arrived">Arrived notification</string>
+    <string name="title_fab_start_trip">Start trip</string>
+    <string name="title_fab_end_trip">End trip</string>
+    <string name="title_fab_edit_price">Edit Price</string>
+    <string name="txt_label_source">Source</string>
+    <string name="txt_label_trip_price">Price:</string>
+    <string name="txt_label_trip_distance">Distance:</string>
+    <string name="txt_label_trip_approximate_time">approximate time:</string>
+    <string name="double_press_back">Please click BACK again to exit</string>
+    <string name="driver">driver</string>
+
+</resources>

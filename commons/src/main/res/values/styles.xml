@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="width_match_parent_max_600">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+</resources>
