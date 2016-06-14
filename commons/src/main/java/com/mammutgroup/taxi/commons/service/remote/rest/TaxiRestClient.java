@@ -2,6 +2,8 @@ package com.mammutgroup.taxi.commons.service.remote.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mammutgroup.taxi.commons.service.remote.model.ApiResponse;
+import com.mammutgroup.taxi.commons.service.remote.model.ResponseDeserializer;
 import com.mammutgroup.taxi.commons.service.remote.rest.api.auth.AuthService;
 //import com.mammutgroup.taxi.commons.service.remote.rest.api.user.UserService;
 import com.mammutgroup.taxi.commons.service.remote.rest.api.order.OrderService;
@@ -29,9 +31,8 @@ public class TaxiRestClient {
 
     private TaxiRestClient() {
         Gson gson = new GsonBuilder()
-                .registerTypeAdapterFactory(new ItemTypeAdapterFactory())
+                .registerTypeAdapter(ApiResponse.class,new ResponseDeserializer())
                 .create();
-
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(BASE_URL)

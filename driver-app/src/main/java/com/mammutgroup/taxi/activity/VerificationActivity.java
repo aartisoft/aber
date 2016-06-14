@@ -47,7 +47,6 @@ public class VerificationActivity extends AbstractVerificationActivity {
         driver.setEmail("driver@gmail.com");
         driver.setFirstName("mushtu");
         driver.setMobileVerified(true);
-        driver.setHasNumber(true);
         driver.setStatus(DriverStatus.OUT_OF_SERVICE);
         UserConfig.getInstance().setCurrentUser(driver);
         transitToHome();

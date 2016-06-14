@@ -1,25 +1,32 @@
+/*
 package com.mammutgroup.taxi.commons.service.remote.rest.api.user.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.mammutgroup.taxi.commons.service.remote.model.BaseDto;
+import com.mammutgroup.taxi.commons.service.remote.model.MobileNumber;
 
+*/
 /**
  * @author mushtu
- * @since 6/14/16.
- */
+ * @since 5/24/16.
+ *//*
+
 public class User extends BaseDto {
+
     private String username;
     private String password;
-    @SerializedName("firstname")
     private String firstName;
-    @SerializedName("lastname")
     private String lastName;
+    private String fullName;
+    private String gender;
+    private boolean hasNumber;
+    @SerializedName(value = "number", alternate = {"numberInfo"})
+    private MobileNumber number;
     private String type;
     private String email;
     private ProfilePicture profilePicture;
     private boolean mobileVerified;
     private String profileImg;
-    private String mobile;
 
     public String getProfileImg() {
         return profileImg;
@@ -61,22 +68,36 @@ public class User extends BaseDto {
         this.lastName = lastName;
     }
 
-
-
-    public String getFullName()
-    {
-        String fullName = "";
-        if(firstName != null && lastName!= null)
-            fullName = firstName + " " + lastName;
-        else if(firstName!= null && lastName == null)
-            fullName = firstName;
-        else if(lastName != null)
-            fullName = lastName;
-        else
-            fullName = mobile;
-
+    public String getFullName() {
         return fullName;
+    }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public boolean isHasNumber() {
+        return hasNumber;
+    }
+
+    public void setHasNumber(boolean hasNumber) {
+        this.hasNumber = hasNumber;
+    }
+
+    public MobileNumber getNumber() {
+        return number;
+    }
+
+    public void setNumber(MobileNumber number) {
+        this.number = number;
     }
 
     public String getType() {
@@ -110,6 +131,5 @@ public class User extends BaseDto {
     public void setMobileVerified(boolean mobileVerified) {
         this.mobileVerified = mobileVerified;
     }
-
-
 }
+*/
