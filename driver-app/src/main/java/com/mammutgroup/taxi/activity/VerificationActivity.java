@@ -55,7 +55,7 @@ public class VerificationActivity extends AbstractVerificationActivity {
 
     protected void transitToHome() {
         progressDialog.dismiss();
-        Intent intent = new Intent(this, DriverHomeActivity.class);
+        Intent intent = new Intent(this, DriverHomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         setResult(MOBILE_ACTIVATED);
         finish();

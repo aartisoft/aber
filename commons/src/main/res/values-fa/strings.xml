@@ -18,7 +18,9 @@
     <string name="name_drawer_item_logout">خروج</string>
     <string name="name_drawer_section_account">حساب کاربری</string>
     <string name="name_drawer_item_credit">اعتبار</string>
-    <string name="name_drawer_item_orders">درخواست های سفر</string>
+    <string name="name_drawer_item_orders">لیست درخواست ها</string>
 
     <string name="txt_label_iran_code">+98</string>
+    <string name="name_drawer_item_emergency_call">تماس اضطراری</string>
+    <string name="name_drawer_item_contact_support">تماس با پشتیبانی</string>
 </resources>

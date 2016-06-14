@@ -97,4 +97,10 @@
     <string name="double_press_back">Please click BACK again to exit</string>
     <string name="driver">driver</string>
 
+    <string name="title_dialog_edit_price">Edit Price</string>
+    <string name="txt_choice_edit_price_waiting">Waiting</string>
+    <string name="txt_choice_edit_price_destination_changed">Destination Change</string>
+    <string name="txt_button_positive_dialog_edit_price">Send</string>
+    <string name="txt_button_negative_dialog_edit_price">Cancel</string>
+
 </resources>

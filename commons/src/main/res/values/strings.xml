@@ -18,8 +18,11 @@
     <string name="name_drawer_item_logout">Logout</string>
     <string name="name_drawer_section_account">Account</string>
     <string name="name_drawer_item_credit">Credit</string>
-    <string name="name_drawer_item_orders">Orders</string>
+    <string name="name_drawer_item_orders">Trips List</string>
+    <string name="name_drawer_item_emergency_call">Emergency Call</string>
+    <string name="name_drawer_item_contact_support">Contact Support</string>
 
     <string name="txt_label_iran_code">+98</string>
+
 
 </resources>

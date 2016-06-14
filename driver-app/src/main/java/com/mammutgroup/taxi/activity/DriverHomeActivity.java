@@ -5,17 +5,19 @@ import android.content.*;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.RelativeLayout;
+import android.widget.*;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.maps.CameraUpdate;
@@ -266,12 +268,10 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
                 .withHasStableIds(true)
                 .withAccountHeader(accountHeader) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.name_drawer_item_home).withIdentifier(1).withSelectable(false),
-                        new PrimaryDrawerItem().withName(R.string.name_drawer_item_orders).withIdentifier(2).withSelectable(false),
-                        new SecondaryDrawerItem().withName(R.string.name_drawer_section_account).withIdentifier(3).withSubItems(
-                                new SecondaryDrawerItem().withName(R.string.name_drawer_item_credit).withIdentifier(300).withLevel(2).withSelectable(false),
-                                new PrimaryDrawerItem().withName(R.string.name_drawer_item_logout).withIdentifier(301).withLevel(2).withSelectable(false)
-                        )
+                        new PrimaryDrawerItem().withName(R.string.name_drawer_item_emergency_call).withIdentifier(1).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.name_drawer_item_contact_support).withIdentifier(2).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.name_drawer_item_orders).withIdentifier(3).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.name_drawer_item_logout).withIdentifier(4).withSelectable(false)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -279,17 +279,15 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
                         if (iDrawerItem != null) {
                             Long id = iDrawerItem.getIdentifier();
                             if (id == 1) {
-
+                                emergencyCall();
                             } else if (id == 2) {
-                                // open orders list
+                                contactSupport();
+                            } else if (id == 3) {
                                 openOrderListActivity();
 
-                            } else if (id == 3) {
-
-
-                            }else if( id == 5)
+                            }else if( id == 4)
                             {
-
+                                logout();
                             }
                         }
 
@@ -303,6 +301,20 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
 
     }
 
+    private void logout()
+    {
+        //TODO
+    }
+
+    private void emergencyCall()
+    {
+
+    }
+
+    private void contactSupport()
+    {
+
+    }
     private void openOrderListActivity()
     {
         if(driver.getStatus() == DriverStatus.READY_FOR_SERVICE) {
@@ -577,6 +589,39 @@ public class DriverHomeActivity extends AbstractHomeActivity implements OnLocati
     void editPrice()
     {
 
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(R.string.title_dialog_edit_price)
+                .customView(R.layout.edit_price_dialog, true)
+                .positiveText(R.string.txt_button_positive_dialog_edit_price)
+                .negativeText(R.string.txt_button_negative_dialog_edit_price)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        //TODO call api
+                        CheckBox choiceDestChanged = (CheckBox)dialog.getCustomView().findViewById(R.id.choiceDestinationChanged);
+                        CheckBox choiceWaiting = (CheckBox) dialog.getCustomView().findViewById(R.id.choiceWaiting);
+                        TimePicker timePicker = (TimePicker)dialog.getCustomView().findViewById(R.id.timePicker);
+                        if(choiceWaiting.isChecked())
+                        {
+                            //TODO call api
+
+
+                        }else if (choiceDestChanged.isChecked())
+                        {
+                            //TODO call api
+                        }
+                    }
+                }).build();
+        final TimePicker timePicker = (TimePicker)dialog.getCustomView().findViewById(R.id.timePicker);
+        timePicker.setIs24HourView(true);
+        CheckBox choiceWaiting = (CheckBox)dialog.getCustomView().findViewById(R.id.choiceWaiting);
+        choiceWaiting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                timePicker.setVisibility( compoundButton.isChecked() ? View.VISIBLE:View.GONE);
+            }
+        });
+        dialog.show();
     }
 
     private void updateView()

@@ -107,4 +107,10 @@
     <string name="txt_label_trip_approximate_time">approximate time:</string>
     <string name="double_press_back">Please click BACK again to exit</string>
     <string name="driver">driver</string>
+
+    <string name="title_dialog_edit_price">تغییر هزینه</string>
+    <string name="txt_choice_edit_price_waiting">انتظار</string>
+    <string name="txt_choice_edit_price_destination_changed">تغییر مقصد</string>
+    <string name="txt_button_positive_dialog_edit_price">ارسال</string>
+    <string name="txt_button_negative_dialog_edit_price">لغو</string>
 </resources>
